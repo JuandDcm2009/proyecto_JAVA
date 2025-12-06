@@ -3,18 +3,10 @@ import java.util.Scanner;
 
 public class Scan {
     
-    private static Scan instance;
     private Scanner scan;
 
-    public static Scan getInstance() {
-        if (instance == null) {
-            instance = new Scan(new Scanner(System.in));
-        }
-        return instance;
-    }
-
-    public Scan(Scanner scan) {
-        this.scan = scan;
+    public Scan() {
+        this.scan = new Scanner(System.in);
     }
 
     public String leerTexto(String msg) {
