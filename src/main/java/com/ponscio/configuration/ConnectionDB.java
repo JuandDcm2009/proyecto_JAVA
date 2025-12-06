@@ -6,7 +6,7 @@ import java.sql.Connection;
 
 public class ConnectionDB {
     
-    private static String URL = "jdbc:mysql://localhost:3307/parqueadero";
+    private static String URL = "jdbc:mysql://localhost:3307/crediya_db";
     private static String USER = "root";
     private static String PASSWORD = "admin";
 

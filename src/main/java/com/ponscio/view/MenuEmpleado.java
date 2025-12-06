@@ -1,12 +1,16 @@
 package com.ponscio.view;
+import com.ponscio.model.Empleado;
+import com.ponscio.repository.EmpleadoDAO;
 import com.ponscio.service.Scan;
 
 public class MenuEmpleado {
     
     private Scan scan;
+    private EmpleadoDAO empleadoDAO;
 
     public MenuEmpleado() {
         this.scan = new Scan();
+        this.empleadoDAO = new EmpleadoDAO();
     }
 
     public void iniciar() {
@@ -20,8 +24,19 @@ public class MenuEmpleado {
 
     public void leerOpcion(int opcion) {
         switch (opcion) {
+            case 1 -> registrar();
             case 0 -> System.out.println("Regresando...");
         }
+    }
+
+    private void registrar() {
+        var nombre = scan.leerTexto("\n> Ingrese el nombre del empleado: ");
+        var documento = scan.leerTexto("\n> Ingrese el documento (CC) del empleado: ");
+        var rol = scan.leerInt("\n> Ingrese el Rol del empleado: ");
+        var correo = scan.leerTexto("\n> Ingrese el correo del empleado: ");
+        var salario = scan.leerInt("\n salario: ");
+        Empleado empleado = new Empleado(0, nombre, documento, rol, correo, 1000.00);
+        empleadoDAO.setEmpleado(empleado);
     }
 
     public void mostrarMenu() {

@@ -1,15 +1,15 @@
 package com.ponscio.model;
 
 public class Empleado {
-    private int id, documento;
-    private String nombre, rol, correo;
+    private int id, rol_id;
+    private String nombre, correo, documento;
     private double salario;
     
-    public Empleado(int id, String nombre, int documento, String rol, String correo, double salario) {
+    public Empleado(int id, String nombre, String documento, int rol_id, String correo, double salario) {
         this.id = id;
         this.documento = documento;
         this.nombre = nombre;
-        this.rol = rol;
+        this.rol_id = rol_id;
         this.correo = correo;
         this.salario = salario;
     }
@@ -17,14 +17,14 @@ public class Empleado {
     public int getId() {
         return id;
     }
-    public int getDocumento() {
+    public String getDocumento() {
         return documento;
     }
     public String getNombre() {
         return nombre;
     }
-    public String getRol() {
-        return rol;
+    public int getRol() {
+        return rol_id;
     }
     public String getCorreo() {
         return correo;
