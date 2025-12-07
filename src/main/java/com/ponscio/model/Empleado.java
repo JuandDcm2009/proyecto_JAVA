@@ -34,18 +34,19 @@ public class Empleado {
         return salario;
     }
     
-    public void mostrarInfo(Map<Integer, String> roles) {
+    public String mostrarInfo(Map<Integer, String> roles) {
+        String info = "";
 
-        System.out.println("================ Empleado ================");
-        System.out.println("\n\tID #"+id);
-        System.out.println("\n\tNombre: "+nombre);
-        System.out.println("\tDocumento: "+documento);
-        System.out.println("\tCorreo: "+correo);
+        info += "\n================ Empleado ================";
+        info += "\n\n\tID #"+id;
+        info += "\n\tNombre: "+nombre;
+        info += "\n\tDocumento: "+documento;
+        info += "\n\tCorreo: "+correo;
         
-        System.out.println("\n\tSalario actual: "+salario);
-        System.out.println("\tCargo Actual: "+ roles.get(rol_id));
-        System.out.println("\n==========================================");
-
+        info += "\n\tSalario actual: "+salario;
+        info += "\n\tCargo Actual: "+ roles.get(rol_id);
+        info += "\n\n==========================================";
+        return info;
     }
 
 }

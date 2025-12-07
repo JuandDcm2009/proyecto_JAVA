@@ -5,6 +5,8 @@ import java.util.List;
 import com.ponscio.model.Empleado;
 import com.ponscio.repository.EmpleadoDAO;
 import com.ponscio.service.Scan;
+import java.util.Map;
+import java.util.Set;
 
 public class MenuEmpleadoF {
 
@@ -16,49 +18,51 @@ public class MenuEmpleadoF {
         this.scan = new Scan();
     }
 
-    public void registrar(Empleado empleado) {
+    public String registrar(Empleado empleado) {
         if (!empleado.getCorreo().contains("@")) {
-            System.out.println("\nError: Correo invalido.");
+            return "\nError: Correo invalido.";
         }
 
         if (empleadoDAO.validarEmpleado(empleado.getDocumento())) {
-            System.out.println("\nError: El documento ingresado ya fue registrado por otro empleado");
-            return;
+            return "\nError: El documento ingresado ya fue registrado por otro empleado";
         }
+
         empleadoDAO.setEmpleado(empleado);
+        return "\nEmpleado guardado.";
     } 
 
-    public void consultar(int option) {
-        if (option == 0) return;
+    public List<Empleado> consultarByNombre(String nombre) {
+        return empleadoDAO.getEmpleadoByNombre(nombre);
+    }
 
-        switch (option) {
-            case 1:
-                var nombre = scan.leerTexto("> Ingrese el nombre a consultar: ").trim();
-                List<Empleado> empleadosByNombre = empleadoDAO.getEmpleadoByNombre(nombre);
-                resultadosConsulta(empleadosByNombre);
-                break;
-            case 2:
-                var documento = scan.leerTexto("> Ingrese el documento a consultar: ").trim();
-                List<Empleado> empleadosByDocumento = empleadoDAO.getEmpleadoByDocumento(documento);
-                resultadosConsulta(empleadosByDocumento);
-                break;
-            case 3:
-                var id = scan.leerInt("> Ingrese el ID a consultar: ");
-                List<Empleado> empleadosById = empleadoDAO.getEmpleadoById(id);
-                resultadosConsulta(empleadosById);
-                break;
-            default:
-                System.out.println("\nError: Opcion no valida.");
-                break;
+    public List<Empleado> consultarById(int id) {
+        return empleadoDAO.getEmpleadoById(id);
+    }
+
+    public List<Empleado> consultarByDocumento(String documento) {
+        return empleadoDAO.getEmpleadoByDocumento(documento);
+    }
+
+    public String mostrarResultados(List<Empleado> empleados) {
+        String resultados = "";
+        for (Empleado e: empleados) {
+            resultados += e.mostrarInfo(empleadoDAO.getRoles());
         }
-
+        if (resultados == null) return "...";
+         return resultados;
     }
 
-    private void resultadosConsulta(List<Empleado> empleados) {
-        if (empleados != null) {
-            empleados.forEach((e) -> e.mostrarInfo(empleadoDAO.getRoles()));
-            System.out.println("Resultados: " + empleados.size());
-        };
+    public String eliminar(int id) {
+        if (empleadoDAO.eliminarEmpleado(id)) return "Empleado correctamente eliminado con el ID: #" + id; 
+        else return "Error: No se pudo eliminar empleado; Id invalido";
     }
 
+    public String getRoles() {
+        String lista = "";
+        Map<Integer,String> roles = empleadoDAO.getRoles();
+        for (Map.Entry<Integer,String> r : roles.entrySet()) {
+            lista += "\n" + r.getKey() + ") " + r.getValue();
+        }
+        return lista;
+    }
 }

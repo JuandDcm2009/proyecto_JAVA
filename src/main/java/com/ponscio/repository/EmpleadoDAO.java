@@ -60,7 +60,6 @@ public class EmpleadoDAO {
                     elementos.add(mapEmpleado(result));
                 }
                 if (elementos.size() == 0) {
-                    System.out.println("\nError: No se logro encontrar nada..");
                     return null;
                 }
                 return elementos;
@@ -138,6 +137,18 @@ public class EmpleadoDAO {
                 return result.next();
             }
         } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public Boolean eliminarEmpleado(int id) {
+        var sql = "DELETE FROM empleados WHERE id = ?";
+        try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            var filas = stmt.executeUpdate();
+            return filas > 0;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
     }
