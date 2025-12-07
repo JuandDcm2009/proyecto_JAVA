@@ -32,16 +32,19 @@ public class MenuEmpleadoF {
                 var nombre = scan.leerTexto("> Ingrese el nombre a consultar: ").trim();
                 List<Empleado> empleadosByNombre = empleadoDAO.getEmpleadoByNombre(nombre);
                 if (empleadosByNombre != null) empleadosByNombre.forEach((e) -> e.mostrarInfo(empleadoDAO.getRoles()));
+                System.out.println("Resultados: " + empleadosByNombre.size());
                 break;
             case 2:
                 var documento = scan.leerTexto("> Ingrese el documento a consultar: ").trim();
                 List<Empleado> empleadosByDocumento = empleadoDAO.getEmpleadoByDocumento(documento);
                 if (empleadosByDocumento != null) empleadosByDocumento.forEach((e) -> e.mostrarInfo(empleadoDAO.getRoles()));
+                System.out.println("Resultados: " + empleadosByDocumento.size());
                 break;
             case 3:
                 var id = scan.leerInt("> Ingrese el ID a consultar: ");
                 List<Empleado> empleadosById = empleadoDAO.getEmpleadoById(id);
                 if (empleadosById != null) empleadosById.forEach((e) -> e.mostrarInfo(empleadoDAO.getRoles()));
+                System.out.println("Resultados: " + empleadosById.size());
                 break;
             default:
                 System.out.println("\nError: Opcion no valida.");
