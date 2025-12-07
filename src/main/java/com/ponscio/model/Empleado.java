@@ -1,4 +1,5 @@
 package com.ponscio.model;
+import java.util.Map;
 
 public class Empleado {
     private int id, rol_id;
@@ -33,6 +34,18 @@ public class Empleado {
         return salario;
     }
     
+    public void mostrarInfo(Map<Integer, String> roles) {
 
+        System.out.println("================ Empleado ================");
+        System.out.println("\n\tID #"+id);
+        System.out.println("\n\tNombre: "+nombre);
+        System.out.println("\tDocumento: "+documento);
+        System.out.println("\tCorreo: "+correo);
+        
+        System.out.println("\n\tSalario actual: "+salario);
+        System.out.println("\tCargo Actual: "+ roles.get(rol_id));
+        System.out.println("\n==========================================");
+
+    }
 
 }

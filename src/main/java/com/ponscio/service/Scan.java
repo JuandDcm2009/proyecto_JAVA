@@ -25,4 +25,16 @@ public class Scan {
         }
     }
 
+    public double leerDouble(String msg) {
+        System.out.println("\n" + msg);
+        try {
+            String opcion = scan.nextLine();
+            return Double.parseDouble(opcion);
+        } catch (Exception e) {
+            System.out.println("\nError: El valor ingresado debe ser de tipo double");
+            return -1;
+        }
+    }
+    
+
 }
