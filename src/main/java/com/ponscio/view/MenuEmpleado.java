@@ -1,9 +1,10 @@
 package com.ponscio.view;
 
+import com.ponscio.Facade.MenuEmpleadoF;
 import com.ponscio.model.Empleado;
 import com.ponscio.repository.EmpleadoDAO;
-import com.ponscio.service.Scan;
-import com.ponscio.service.Facade.MenuEmpleadoF;
+import com.ponscio.util.Scan;
+
 import java.util.List;
 
 public class MenuEmpleado {

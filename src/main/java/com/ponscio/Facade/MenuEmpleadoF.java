@@ -1,10 +1,11 @@
-package com.ponscio.service.Facade;
+package com.ponscio.Facade;
 
 import java.util.List;
 
 import com.ponscio.model.Empleado;
 import com.ponscio.repository.EmpleadoDAO;
-import com.ponscio.service.Scan;
+import com.ponscio.util.Scan;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -19,6 +20,10 @@ public class MenuEmpleadoF {
     }
 
     public String registrar(Empleado empleado) {
+        if (empleado.getRol() > empleadoDAO.getRoles().size()) {
+            return "\nError: El ID del Cargo a asignar es invalido";
+        }
+
         if (!empleado.getCorreo().contains("@")) {
             return "\nError: Correo invalido.";
         }

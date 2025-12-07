@@ -12,7 +12,7 @@ CREATE TABLE empleados (
  correo VARCHAR(80),
  salario DECIMAL(10,2),
  FOREIGN KEY (rol_id) REFERENCES roles(id)
-);
+) AUTO_INCREMENT = 1;
 
 CREATE TABLE clientes (
  id INT AUTO_INCREMENT PRIMARY KEY,

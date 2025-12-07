@@ -1,4 +1,4 @@
-package com.ponscio.service;
+package com.ponscio.util;
 import java.util.Scanner;
 
 public class Scan {

@@ -1,5 +1,5 @@
 package com.ponscio.view;
-import com.ponscio.service.Scan;
+import com.ponscio.util.Scan;
 
 public class MenuConsole {
     
