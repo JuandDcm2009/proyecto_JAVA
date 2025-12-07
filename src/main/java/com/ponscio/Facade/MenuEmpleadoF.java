@@ -1,22 +1,17 @@
 package com.ponscio.Facade;
 
 import java.util.List;
-
 import com.ponscio.model.Empleado;
 import com.ponscio.repository.EmpleadoDAO;
-import com.ponscio.util.Scan;
 
 import java.util.Map;
-import java.util.Set;
 
 public class MenuEmpleadoF {
 
     private EmpleadoDAO empleadoDAO;
-    private Scan scan;
 
     public MenuEmpleadoF(EmpleadoDAO empleadoDAO) {
         this.empleadoDAO = empleadoDAO;
-        this.scan = new Scan();
     }
 
     public String registrar(Empleado empleado) {
@@ -53,7 +48,7 @@ public class MenuEmpleadoF {
         for (Empleado e: empleados) {
             resultados += e.mostrarInfo(empleadoDAO.getRoles());
         }
-        if (resultados == null) return "...";
+    
          return resultados;
     }
 
