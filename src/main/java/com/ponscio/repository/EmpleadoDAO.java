@@ -47,10 +47,13 @@ public class EmpleadoDAO {
     }
 
     // Obtener empleados
-    private List<Empleado> getEmpleado(String sql, Object param) {
+    private List<Empleado> getEmpleado(String sql, Object param, Boolean especificQuery) {
         System.out.println("Cargando informacion...");
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
-            stmt.setObject(1, "%" + param + "%");
+            
+            if (param instanceof String && especificQuery) stmt.setObject(1, "%" + param + "%");
+            else stmt.setObject(1, param);
+            
             List<Empleado> elementos = new ArrayList<>();
             try (ResultSet result = stmt.executeQuery()) {
                 while (result.next()) {
@@ -81,15 +84,15 @@ public class EmpleadoDAO {
     }
 
     public List<Empleado> getEmpleadoById(int id) {
-        return getEmpleado("SELECT id, nombre, documento, rol_id, correo, salario FROM empleados WHERE id = ?", id);
+        return getEmpleado("SELECT id, nombre, documento, rol_id, correo, salario FROM empleados WHERE id = ?", id, false);
     }
 
     public List<Empleado> getEmpleadoByNombre(String nombre) {
-        return getEmpleado("SELECT id, nombre, documento, rol_id, correo, salario FROM empleados WHERE nombre LIKE ?", nombre);
+        return getEmpleado("SELECT id, nombre, documento, rol_id, correo, salario FROM empleados WHERE nombre LIKE ?", nombre, true);
     }
 
     public List<Empleado> getEmpleadoByDocumento(String documento) {
-        return getEmpleado("SELECT id, nombre, documento, rol_id, correo, salario FROM empleados WHERE documento = ?", documento);
+        return getEmpleado("SELECT id, nombre, documento, rol_id, correo, salario FROM empleados WHERE documento = ?", documento, false);
     }
     // 
     public void setEmpleado(Empleado empleado) {

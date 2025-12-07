@@ -17,6 +17,10 @@ public class MenuEmpleadoF {
     }
 
     public void registrar(Empleado empleado) {
+        if (!empleado.getCorreo().contains("@")) {
+            System.out.println("\nError: Correo invalido.");
+        }
+
         if (empleadoDAO.validarEmpleado(empleado.getDocumento())) {
             System.out.println("\nError: El documento ingresado ya fue registrado por otro empleado");
             return;
@@ -31,28 +35,30 @@ public class MenuEmpleadoF {
             case 1:
                 var nombre = scan.leerTexto("> Ingrese el nombre a consultar: ").trim();
                 List<Empleado> empleadosByNombre = empleadoDAO.getEmpleadoByNombre(nombre);
-                if (empleadosByNombre != null) empleadosByNombre.forEach((e) -> e.mostrarInfo(empleadoDAO.getRoles()));
-                System.out.println("Resultados: " + empleadosByNombre.size());
+                resultadosConsulta(empleadosByNombre);
                 break;
             case 2:
                 var documento = scan.leerTexto("> Ingrese el documento a consultar: ").trim();
                 List<Empleado> empleadosByDocumento = empleadoDAO.getEmpleadoByDocumento(documento);
-                if (empleadosByDocumento != null) empleadosByDocumento.forEach((e) -> e.mostrarInfo(empleadoDAO.getRoles()));
-                System.out.println("Resultados: " + empleadosByDocumento.size());
+                resultadosConsulta(empleadosByDocumento);
                 break;
             case 3:
                 var id = scan.leerInt("> Ingrese el ID a consultar: ");
                 List<Empleado> empleadosById = empleadoDAO.getEmpleadoById(id);
-                if (empleadosById != null) empleadosById.forEach((e) -> e.mostrarInfo(empleadoDAO.getRoles()));
-                System.out.println("Resultados: " + empleadosById.size());
+                resultadosConsulta(empleadosById);
                 break;
             default:
                 System.out.println("\nError: Opcion no valida.");
                 break;
         }
 
+    }
 
-        var sql ="SELECT id, nombre, documento, rol, correo, salario FROM empleados WHERE id = ?";
+    private void resultadosConsulta(List<Empleado> empleados) {
+        if (empleados != null) {
+            empleados.forEach((e) -> e.mostrarInfo(empleadoDAO.getRoles()));
+            System.out.println("Resultados: " + empleados.size());
+        };
     }
 
 }
