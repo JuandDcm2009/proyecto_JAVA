@@ -50,7 +50,7 @@ public class EmpleadoDAO {
     private List<Empleado> getEmpleado(String sql, Object param) {
         System.out.println("Cargando informacion...");
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
-            stmt.setObject(1, param);
+            stmt.setObject(1, "%" + param + "%");
             List<Empleado> elementos = new ArrayList<>();
             try (ResultSet result = stmt.executeQuery()) {
                 while (result.next()) {
@@ -85,7 +85,7 @@ public class EmpleadoDAO {
     }
 
     public List<Empleado> getEmpleadoByNombre(String nombre) {
-        return getEmpleado("SELECT id, nombre, documento, rol_id, correo, salario FROM empleados WHERE nombre = ?", nombre);
+        return getEmpleado("SELECT id, nombre, documento, rol_id, correo, salario FROM empleados WHERE nombre LIKE ?", nombre);
     }
 
     public List<Empleado> getEmpleadoByDocumento(String documento) {
