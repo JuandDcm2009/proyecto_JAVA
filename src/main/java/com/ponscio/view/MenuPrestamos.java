@@ -45,11 +45,9 @@ public class MenuPrestamos {
             System.out.println("Muy bien, le vendiste el alma al diablo (campus)");
         }
         
+        
 
     }
-
-
-
 
     public void mostrarMenu() {
         System.out.println("\n====================================");

@@ -8,9 +8,9 @@ public enum BussinesError {
     VALOR_FUERA_DE_RANGO  (1005, "El valor numérico está fuera del rango permitido."),
     CARACTER_NO_PERMITIDO (1100, "La entrada contiene caracteres no permitidos."),
     FORMATO_INVALIDO_CORREO (1006, "La entrada no cumple con el formato de un Correo."),
-    VALOR_REPETIDO_NUMERO  (1005, "El valor ingresado ya esta repetido.");
-
-
+    VALOR_REPETIDO_NUMERO  (1007, "El valor ingresado ya esta repetido."),
+    VALOR_INEXISTENTE_NUMERO  (1008, "El valor ingresado no existe."),
+    ERROR_DB_OBTENER_OBJETO  (1005, "Hubo un error al intentar obtener los datos.");
 
     private int code;
     private String description;

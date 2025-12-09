@@ -15,7 +15,10 @@ public class ClienteDAO {
     public Cliente getClienteById(int id) {    
         var sql = "SELECT id, nombre, documento_numero, documento_tipo, correo, telefono_id FROM clientes WHERE id = ?";
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
+            stmt.setInt(1, id);
             try (ResultSet result = stmt.executeQuery()) {
+                
+
                 if (result.next()) {
                     return new Cliente(
                         result.getInt("id"),
@@ -94,6 +97,24 @@ public class ClienteDAO {
             stmt.setString(1, documento);
             stmt.setString(2, tipo);
             ResultSet result = stmt.executeQuery();
+            if (!result.next()) {
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("\nError: Hubo un problema al intentar validar el cliente");
+            return false;
+        }
+    }
+
+    public Boolean validarCliente(int id) {
+        System.out.println("\nCargando Informacion....");
+        var sql = "SELECT id FROM clientes WHERE id = ?";
+        try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet result = stmt.executeQuery();
+            
             if (!result.next()) {
                 return false;
             }

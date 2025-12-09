@@ -5,7 +5,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
-
+import java.util.ArrayList;
+import java.util.List;
 import com.ponscio.configuration.ConnectionDB;
 import com.ponscio.model.Prestamo;
 
@@ -30,13 +31,17 @@ public class PrestamoDAO {
         }
     }
 
-    public Prestamo getPrestamo(int cliente_id) {
+    public List<Prestamo> getPrestamo(int cliente_id) {
         String sql = "SELECT id, cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado FROM prestamos WHERE cliente_id = ?";
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
+            
             stmt.setInt(1, cliente_id);
+            
             ResultSet result = stmt.executeQuery();
+            List<Prestamo> prestamos = new ArrayList<>();
+
             if (result.next()) {
-                return new Prestamo(
+                prestamos.add(new Prestamo(
                     result.getInt("id"),
                     result.getInt("cliente_id"),
                     result.getInt("empleado_id"),
@@ -45,9 +50,9 @@ public class PrestamoDAO {
                     result.getInt("cuotas"),
                     result.getDate("fecha_inicio").toLocalDate(),
                     result.getString("estado")
-                );
+                ));
             }
-            return null;
+            return prestamos;
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

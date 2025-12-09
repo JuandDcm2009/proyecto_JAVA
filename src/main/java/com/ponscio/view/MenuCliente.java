@@ -35,6 +35,7 @@ public class MenuCliente {
         switch (opcion) {
             case 1 -> registrar();
             case 2 -> listar();
+            case 3 -> mostrarPrestamos();
             case 0 -> System.out.println("Regresando...");
         }
     }
@@ -71,6 +72,15 @@ public class MenuCliente {
     public void listar() {
         System.out.println(clienteF.listarClientes());
     }
+
+    public void mostrarPrestamos() {
+        int id_cliente = scan.leerInt("> Ingrese ID del cliente: ");
+        try {
+            System.out.println(clienteF.mostrarPrestamo(id_cliente));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
     
     private void mostrarMenu() {
         System.out.println("\n====================================");
@@ -78,6 +88,7 @@ public class MenuCliente {
         System.out.println("====================================\n");
         System.out.println("*\t1) Registrar cliente");
         System.out.println("*\t2) Listar clientes");
+        System.out.println("*\t3) Mostrar prestamos");
         System.out.println("*\t0) Regresar al menu principal");
         System.out.println("\n====================================");
     }
