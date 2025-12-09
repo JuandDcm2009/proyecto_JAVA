@@ -11,7 +11,9 @@ public class Scan {
 
     public String leerTexto(String msg) {
         System.out.println("\n" + msg);
-        return scan.nextLine();
+        String text = scan.nextLine();
+        if (text.length() < 1) return null;
+        return text;
     }    
 
     public int leerInt(String msg) {
@@ -20,7 +22,7 @@ public class Scan {
             String opcion = scan.nextLine();
             return Integer.parseInt(opcion);
         } catch (Exception e) {
-            System.out.println("\nError: El valor ingresado debe ser de tipo numerico");
+            System.out.println("\nPosible Error: El valor ingresado debe ser de tipo numerico");
             return -1;
         }
     }
@@ -31,7 +33,7 @@ public class Scan {
             String opcion = scan.nextLine();
             return Double.parseDouble(opcion);
         } catch (Exception e) {
-            System.out.println("\nError: El valor ingresado debe ser de tipo double");
+            System.out.println("\nPosible Error: El valor ingresado debe ser de tipo double");
             return -1;
         }
     }
