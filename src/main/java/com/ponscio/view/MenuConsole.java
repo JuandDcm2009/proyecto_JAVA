@@ -6,11 +6,13 @@ public class MenuConsole {
     private Scan scan;
     private MenuEmpleado mEmpleado;
     private MenuCliente mCliente;
+    private MenuPrestamos mPrestamos;
 
     public MenuConsole() {
         this.scan = new Scan();
         this.mEmpleado = new MenuEmpleado();
         this.mCliente = new MenuCliente();
+        this.mPrestamos = new MenuPrestamos();
     }
 
     public void iniciar() {
@@ -26,6 +28,7 @@ public class MenuConsole {
         switch (opcion) {
             case 1 -> mEmpleado.iniciar();
             case 2 -> mCliente.iniciar();
+            case 3 -> mPrestamos.iniciar();
             case 0 -> System.out.println("Gracias por elegir a Ponscio Studio's company");
         }
     }

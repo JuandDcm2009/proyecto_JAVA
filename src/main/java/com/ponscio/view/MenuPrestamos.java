@@ -2,13 +2,16 @@ package com.ponscio.view;
 import java.time.LocalDate;
 
 import com.ponscio.model.Prestamo;
+import com.ponscio.repository.PrestamoDAO;
 import com.ponscio.util.Scan;
 
 public class MenuPrestamos {
     private Scan scan;
+    private PrestamoDAO prestamoDAO;
 
    public MenuPrestamos() {
         this.scan = new Scan();
+        this.prestamoDAO = new PrestamoDAO();
     }
 
     public void iniciar() {
@@ -22,6 +25,7 @@ public class MenuPrestamos {
 
     public void leerOpcion(int opcion) {
         switch (opcion) {
+            case 1 -> crearPrestamo();
             case 0 -> System.out.println("Regresando...");
         }
     }
@@ -33,10 +37,14 @@ public class MenuPrestamos {
         double monto = scan.leerInt("> Ingrese el monto del prestamo:");
         double interes = scan.leerInt("> Ingrese el interes para el pretamo:");
         int cuotas = scan.leerInt("> Ingrese el numero de cuotas que tendra el prestamo:");
+
         LocalDate fecha_inicio = LocalDate.now();
         String estado = "pendiente";
         Prestamo prestamo = new Prestamo(0,cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado);
-
+        if (prestamoDAO.setPrestamo(prestamo)) {
+            System.out.println("Muy bien, le vendiste el alma al diablo (campus)");
+        }
+        
 
     }
 
