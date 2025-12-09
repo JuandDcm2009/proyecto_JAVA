@@ -3,13 +3,14 @@ import java.util.Map;
 
 public class Empleado {
     private int id, rol_id;
-    private String nombre, correo, documento;
+    private String nombre, correo, documento_numero, documento_tipo;
     private double salario;
     
-    public Empleado(int id, String nombre, String documento, int rol_id, String correo, double salario) {
+    public Empleado(int id, String nombre, String documento_numero, String documento_tipo,int rol_id, String correo, double salario) {
         this.id = id;
-        this.documento = documento;
         this.nombre = nombre;
+        this.documento_numero = documento_numero;
+        this.documento_tipo = documento_tipo;
         this.rol_id = rol_id;
         this.correo = correo;
         this.salario = salario;
@@ -18,8 +19,11 @@ public class Empleado {
     public int getId() {
         return id;
     }
-    public String getDocumento() {
-        return documento;
+    public String getDocumentoNumero() {
+        return documento_numero;
+    }
+    public String getDocumentoTipo() {
+        return documento_tipo;
     }
     public String getNombre() {
         return nombre;
@@ -40,7 +44,7 @@ public class Empleado {
         info += "\n================ Empleado ================";
         info += "\n\n\tID #"+id;
         info += "\n\tNombre: "+nombre;
-        info += "\n\tDocumento: "+documento;
+        info += "\n\tDocumento: "+documento_numero;
         info += "\n\tCorreo: "+correo;
         
         info += "\n\tSalario actual: "+salario;

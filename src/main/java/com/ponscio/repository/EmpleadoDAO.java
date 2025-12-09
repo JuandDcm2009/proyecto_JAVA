@@ -6,6 +6,7 @@ import com.ponscio.model.Empleado;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -74,40 +75,45 @@ public class EmpleadoDAO {
     private Empleado mapEmpleado(ResultSet result) throws Exception {
         var resultId = result.getInt("id");
         var resultNombre = result.getString("nombre");
-        var resultDocumento = result.getString("documento");
+        var resultDocumentoNumero = result.getString("documento_numero");
+        var resultDocumentoTipo = result.getString("documento_tipo");
         var resultRol = result.getInt("rol_id");
         var resultCorreo = result.getString("correo");
         var resultSalario = result.getDouble("salario");
         System.out.println("\nInformacion cargada correctmente!");
-        return new Empleado(resultId, resultNombre, resultDocumento, resultRol, resultCorreo, resultSalario);
+        return new Empleado(resultId, resultNombre, resultDocumentoNumero, resultDocumentoTipo, resultRol, resultCorreo, resultSalario);
     }
 
     public List<Empleado> getEmpleadoById(int id) {
-        return getEmpleado("SELECT id, nombre, documento, rol_id, correo, salario FROM empleados WHERE id = ?", id, false);
+        return getEmpleado("SELECT id, nombre, documento_numero, documento_tipo, rol_id, correo, salario FROM empleados WHERE id = ?", id, false);
     }
 
     public List<Empleado> getEmpleadoByNombre(String nombre) {
-        return getEmpleado("SELECT id, nombre, documento, rol_id, correo, salario FROM empleados WHERE nombre LIKE ?", nombre, true);
+        return getEmpleado("SELECT id, nombre, documento_numero, documento_tipo, rol_id, correo, salario FROM empleados WHERE nombre LIKE ?", nombre, true);
     }
 
     public List<Empleado> getEmpleadoByDocumento(String documento) {
-        return getEmpleado("SELECT id, nombre, documento, rol_id, correo, salario FROM empleados WHERE documento = ?", documento, false);
+        return getEmpleado("SELECT id, nombre, documento_numero, documento_tipo, rol_id, correo, salario FROM empleados WHERE documento_numero = ?", documento, false);
     }
     // 
-    public void setEmpleado(Empleado empleado) {
+    public Boolean setEmpleado(Empleado empleado) {
         System.out.println("Cargando informacion...");
-        var sql = "INSERT INTO empleados(nombre, documento, rol_id, correo, salario) VALUES(?,?,?,?,?)";
+        var sql = "INSERT INTO empleados(nombre, documento_numero, documento_tipo, rol_id, correo, salario) VALUES(?,?,?,?,?,?)";
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
             stmt.setString(1, empleado.getNombre());
-            stmt.setString(2, empleado.getDocumento());
-            stmt.setInt(3, empleado.getRol());
-            stmt.setString(4, empleado.getCorreo());
-            stmt.setDouble(5, empleado.getSalario());
-            stmt.executeUpdate();
-            System.out.println("\nInformacion cargada correctmente!");
-        } catch (Exception e) {
+            stmt.setString(2, empleado.getDocumentoNumero());
+            stmt.setString(3, empleado.getDocumentoTipo());
+            stmt.setInt(4, empleado.getRol());
+            stmt.setString(5, empleado.getCorreo());
+            stmt.setDouble(6, empleado.getSalario());
+            int filas = stmt.executeUpdate();
+            System.out.println("\nInformacion cargada correctamente!");
+            return filas > 0;
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             System.out.println("\nError: No se pudo registrar el empleado.");
+            if (e.getErrorCode() == 1048) System.out.println("\nError: Hubo un error al intentar insertar un campo NULO, Porfavor llenar toda la informacion");
+            return false;
         }     
     }
 
@@ -128,10 +134,9 @@ public class EmpleadoDAO {
 
     public Boolean validarEmpleado(String documento) {
         System.out.println("Cargando informacion...");
-        var sql = "SELECT documento FROM empleados WHERE documento = ?";
+        var sql = "SELECT documento_numero FROM empleados WHERE documento = ?";
 
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
-            
             stmt.setString(1, documento);
             try (ResultSet result = stmt.executeQuery()) {
                 return result.next();

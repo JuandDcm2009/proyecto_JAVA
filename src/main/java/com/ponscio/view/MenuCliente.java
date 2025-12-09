@@ -43,10 +43,10 @@ public class MenuCliente {
         String nombre = scan.leerTexto("> Ingrese el nombre del cliente: ");
         int option = scan.leerInt("> Ingrese el tipo de documento del cliente: \n\n> 1) Cedula de Ciudadania\n> 2) Cedula Extranjera\n");
         String tipoD = null;
-
         if (option == 1) tipoD = "CC";
         else if (option == 2) tipoD = "CE"; 
 
+        
         String documento_numero = scan.leerTexto("> Ingrese el documento del cliente");
         String correo = scan.leerTexto("> Ingrese el correo del cliente: ");
 
