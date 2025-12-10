@@ -3,9 +3,13 @@ package com.ponscio.view;
 import com.ponscio.Facade.MenuClienteF;
 import com.ponscio.model.Cliente;
 import com.ponscio.model.Telefono;
+import com.ponscio.model.error.BussinesError;
+import com.ponscio.model.error.CrediYaError;
+import com.ponscio.model.valueobjects.Email;
 import com.ponscio.repository.ClienteDAO;
 import com.ponscio.repository.TelefonoDAO;
 import com.ponscio.util.*;
+import com.ponscio.model.valueobjects.TelefonoV;
 
 public class MenuCliente {
 
@@ -41,31 +45,37 @@ public class MenuCliente {
     }
 
     private void registrar() {
-        String nombre = scan.leerTexto("> Ingrese el nombre del cliente: ");
-        int option = scan.leerInt("> Ingrese el tipo de documento del cliente: \n\n> 1) Cedula de Ciudadania\n> 2) Cedula Extranjera\n");
-        String tipoD = null;
-        if (option == 1) tipoD = "CC";
-        else if (option == 2) tipoD = "CE"; 
+        try {
+            String nombre = scan.leerTexto("> Ingrese el nombre del cliente: ");
+            if (nombre == null) throw new CrediYaError("El nombre no puede ser NULO", BussinesError.VALOR_INVALIDO_NULO);
 
-        
-        String documento_numero = scan.leerTexto("> Ingrese el documento del cliente");
-        String correo = scan.leerTexto("> Ingrese el correo del cliente: ");
+            int option = scan.leerInt("> Ingrese el tipo de documento del cliente: \n\n> 1) Cedula de Ciudadania\n> 2) Cedula Extranjera\n");
+            String tipoD = null;
+            if (option == 1) tipoD = "CC";
+            else if (option == 2) tipoD = "CE"; 
+            else throw new CrediYaError("La opcion ingresada no es valida.", BussinesError.VALOR_INEXISTENTE_NUMERO);            
+            if (tipoD == null) throw new CrediYaError("El tipo de documento no puede ser nulo; Ingrese una opcion valida", BussinesError.VALOR_INVALIDO_NULO);
+            
+            String documento_numero = scan.leerTexto("> Ingrese el documento del cliente");
+            if (documento_numero == null) throw new CrediYaError("El documento ingresado no puede ser NULO", BussinesError.VALOR_INVALIDO_NULO);
 
-        String telefono = scan.leerTexto("> Ingrese el telefono del cliente");
-        String pais_id = scan.leerTexto("> Ingrese el codigo del pais\nFormato: +123");
+            String correo = new Email(scan.leerTexto("> Ingrese el correo del cliente: ")).getValue();
+            String telefono = new TelefonoV(scan.leerTexto("> Ingrese el telefono del cliente")).getValue();
 
-        if (!clienteF.validarCodigoTelefono(pais_id)) {
-            System.out.println("\nError: Codigo de pais invalido.");
-            return;
-        }
-        int idTelefono = clienteF.registrarNumero(new Telefono(0, telefono, clienteF.getCodigoPais(pais_id)));
-        if (idTelefono > 0) {
+            String pais_id = scan.leerTexto("> Ingrese el codigo del pais\nFormato: +123");
+            if (pais_id == null) throw new CrediYaError("El codigo pais no puee ser NULO", BussinesError.VALOR_INVALIDO_NULO);
+            if (!clienteF.validarCodigoTelefono(pais_id)) throw new CrediYaError("Codigo de pais invalido.", BussinesError.VALOR_INEXISTENTE_NUMERO);
+            
+            int idTelefono = clienteF.registrarNumero(new Telefono(0, telefono, clienteF.getCodigoPais(pais_id)));
+            
+            if ((idTelefono == -1)) throw new CrediYaError("Hubo un error al registrar el numero\nIntentelo de nuevo mas tarde.", BussinesError.ERROR_FALLO_PROCESO);
             Cliente cliente = new Cliente(0, nombre, documento_numero, tipoD, correo, idTelefono);
             System.out.println(clienteF.registrarCliente(cliente));   
-            return;
-        } 
-        System.out.println("\nError: No se pudo validar el telefono");
-        System.out.println("Verifique el formato del telefono y que solo contenga valores de tipo numerico\nVuelva a intentarlo mas tarde..");
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            System.out.println(e.getMessage());
+        }
+        
     }
 
 

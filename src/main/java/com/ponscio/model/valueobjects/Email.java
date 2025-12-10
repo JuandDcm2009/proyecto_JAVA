@@ -16,12 +16,11 @@ public class Email {
         if (!email.matches(EMAIL_REGEX)) {
             throw new EmailValidatorError("El email ingresado es invalido.");
         }
+
         value = email;
     }
 
     public String getValue() {
         return value;
     }
-
-    
 }
