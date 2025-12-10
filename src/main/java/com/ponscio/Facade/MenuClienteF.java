@@ -2,10 +2,14 @@ package com.ponscio.Facade;
 
 import com.ponscio.repository.ClienteDAO;
 import com.ponscio.repository.PaisDAO;
+import com.ponscio.repository.PrestamoDAO;
 import com.ponscio.repository.TelefonoDAO;
 import com.ponscio.model.Cliente;
 import com.ponscio.model.Telefono;
+import com.ponscio.model.error.BussinesError;
+import com.ponscio.model.error.CrediYaError;
 import com.ponscio.model.Pais;
+import com.ponscio.model.Prestamo;
 
 import java.util.Map;
 import java.util.List;
@@ -16,12 +20,14 @@ public class MenuClienteF {
     TelefonoDAO telefonoDAO;
     PaisDAO paisDAO;
     Map<String, Pais> paises;
+    private PrestamoDAO prestamoDAO;
     
     public MenuClienteF(ClienteDAO clienteDAO, TelefonoDAO telefonoDAO) {
         this.clienteDAO = clienteDAO;
         this.telefonoDAO = telefonoDAO;
         this.paisDAO = new PaisDAO();
         this.paises = paisDAO.getPaises();
+        this.prestamoDAO = new PrestamoDAO();
     }
 
     public Boolean validarInteger(String numero) {
@@ -76,6 +82,30 @@ public class MenuClienteF {
             lista += c.mostrarInfo(telefonoDAO.getTelefonoById(c.getTelefonoId()), codigo);
         }
         return lista;
+    }
+
+    public String mostrarPrestamo(int id_cliente) throws Exception{
+        
+        if (!clienteDAO.validarCliente(id_cliente)) {
+            throw new CrediYaError("El ID del cliente ingresado no coincicde con niunguno en la base de datos", BussinesError.VALOR_INEXISTENTE_NUMERO);
+        }
+
+        List<Prestamo> prestamos = prestamoDAO.getPrestamo(id_cliente);
+        if (prestamos == null) {
+            throw new CrediYaError("No se pudo obtener los prestamos de ese cliente\nVuelva a intentarlo mas tarde", BussinesError.ERROR_DB_OBTENER_OBJETO);
+        }
+
+        Cliente cliente = clienteDAO.getClienteById(id_cliente);
+        if (cliente == null) {
+            throw new CrediYaError("Hubo un problema al intentar obtener el cliente", BussinesError.ERROR_DB_OBTENER_OBJETO);
+        }
+
+        String prestamosInfo = "=============== PRESTAMOS DE " + cliente.getNombre() + "===============\n";
+        for (Prestamo prestamo : prestamos) {
+            prestamosInfo = prestamo.mostrarInfo(cliente);
+        }
+
+        return prestamosInfo;
     }
 
 }

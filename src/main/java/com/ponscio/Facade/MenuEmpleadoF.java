@@ -1,8 +1,12 @@
 package com.ponscio.Facade;
 
+import java.math.BigDecimal;
 import java.util.List;
 import com.ponscio.model.Empleado;
+import com.ponscio.model.error.BussinesError;
+import com.ponscio.model.error.CrediYaError;
 import com.ponscio.repository.EmpleadoDAO;
+
 
 import java.util.Map;
 
@@ -14,21 +18,20 @@ public class MenuEmpleadoF {
         this.empleadoDAO = empleadoDAO;
     }
 
-    public String registrar(Empleado empleado) {
-        if (empleado.getRol() > empleadoDAO.getRoles().size()) {
-            return "\nError: El ID del Cargo a asignar es invalido";
+    public String registrar(Empleado empleado) throws CrediYaError {
+        
+        if (empleado.getRol() > empleadoDAO.getRoles().size() || empleado.getRol() < 0) {
+            throw new CrediYaError("El Rol ingresado no es valido", BussinesError.VALOR_FUERA_DE_RANGO);
+        }
+        
+        if (empleadoDAO.validarEmpleado(empleado.getDocumentoNumero())) {
+            throw new CrediYaError("El Documento ingresado ya esta registrado", BussinesError.VALOR_REPETIDO_NUMERO);
         }
 
-        if (!empleado.getCorreo().contains("@")) {
-            return "\nError: Correo invalido.";
-        }
+        if (empleado.getSalario().compareTo(BigDecimal.ZERO) < 1) throw new CrediYaError("El monto del salario debe ser mayor a 0", BussinesError.FORMATO_INVALIDO_NUMERO);
 
-        if (empleadoDAO.validarEmpleado(empleado.getDocumento())) {
-            return "\nError: El documento ingresado ya fue registrado por otro empleado";
-        }
-
-        empleadoDAO.setEmpleado(empleado);
-        return "\nEmpleado guardado.";
+        if (empleadoDAO.setEmpleado(empleado)) return "\nEmpleado guardado.";
+        else throw new CrediYaError("Hubo un problema al intentar completar el proceso.", BussinesError.ERROR_FALLO_PROCESO);
     } 
 
     public List<Empleado> consultarByNombre(String nombre) {
@@ -48,13 +51,7 @@ public class MenuEmpleadoF {
         for (Empleado e: empleados) {
             resultados += e.mostrarInfo(empleadoDAO.getRoles());
         }
-    
          return resultados;
-    }
-
-    public String eliminar(int id) {
-        if (empleadoDAO.eliminarEmpleado(id)) return "Empleado correctamente eliminado con el ID: #" + id; 
-        else return "Error: No se pudo eliminar empleado; Id invalido";
     }
 
     public String getRoles() {
