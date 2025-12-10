@@ -100,7 +100,7 @@ public class MenuClienteF {
             throw new CrediYaError("Hubo un problema al intentar obtener el cliente", BussinesError.ERROR_DB_OBTENER_OBJETO);
         }
 
-        String prestamosInfo = "=============== PRESTAMOS DE " + cliente.getNombre() + "===============\n";
+        String prestamosInfo = "=============== PRESTAMOS DE " + cliente.getNombre() + " ===============\n";
         for (Prestamo prestamo : prestamos) {
             prestamosInfo = prestamo.mostrarInfo(cliente);
         }

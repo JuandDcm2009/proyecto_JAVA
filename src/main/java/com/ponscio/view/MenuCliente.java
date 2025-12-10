@@ -6,6 +6,7 @@ import com.ponscio.model.Telefono;
 import com.ponscio.model.error.BussinesError;
 import com.ponscio.model.error.CrediYaError;
 import com.ponscio.model.valueobjects.Email;
+import com.ponscio.model.valueobjects.Integer;
 import com.ponscio.repository.ClienteDAO;
 import com.ponscio.repository.TelefonoDAO;
 import com.ponscio.util.*;
@@ -56,8 +57,7 @@ public class MenuCliente {
             else throw new CrediYaError("La opcion ingresada no es valida.", BussinesError.VALOR_INEXISTENTE_NUMERO);            
             if (tipoD == null) throw new CrediYaError("El tipo de documento no puede ser nulo; Ingrese una opcion valida", BussinesError.VALOR_INVALIDO_NULO);
             
-            String documento_numero = scan.leerTexto("> Ingrese el documento del cliente");
-            if (documento_numero == null) throw new CrediYaError("El documento ingresado no puede ser NULO", BussinesError.VALOR_INVALIDO_NULO);
+            String documento_numero = new Integer(scan.leerTexto("> Ingrese el documento del cliente")).getValue();
 
             String correo = new Email(scan.leerTexto("> Ingrese el correo del cliente: ")).getValue();
             String telefono = new TelefonoV(scan.leerTexto("> Ingrese el telefono del cliente")).getValue();
