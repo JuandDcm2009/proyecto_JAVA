@@ -10,12 +10,13 @@ public enum BussinesError {
     FORMATO_INVALIDO_CORREO (1006, "La entrada no cumple con el formato de un Correo."),
     VALOR_REPETIDO_NUMERO  (1007, "El valor ingresado ya esta repetido."),
     VALOR_INEXISTENTE_NUMERO  (1008, "El valor ingresado no existe."),
-    ERROR_DB_OBTENER_OBJETO  (1005, "Hubo un error al intentar obtener los datos.");
+    ERROR_DB_OBTENER_OBJETO  (1009, "Hubo un error al intentar obtener los datos."),
+    ERROR_FALLO_PROCESO  (1010, "Hubo un error al intentar gestionar el proceso."),
+    VALOR_INVALIDO_NULO  (1010, "El valor ingresado no puede ser NULO.");
 
     private int code;
     private String description;
 
-    
     private BussinesError(int errorCode, String description) {
         this.code = errorCode; 
         this.description = description;

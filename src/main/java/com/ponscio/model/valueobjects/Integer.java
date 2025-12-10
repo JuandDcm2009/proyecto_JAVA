@@ -14,14 +14,14 @@ public class Integer {
     private String INT_REGEX = "\\d+";
     
     public Integer(String numero) throws CrediYaError {
-        if (!numero.matches(INT_REGEX)) {
-            throw new IntegerValidatorError("Error inesperado");
+        if (numero == null) throw new IntegerValidatorError("El valor ingresado es nulo.");
+        
+        if (!numero.matches(INT_REGEX) && numero != null) {
+            throw new IntegerValidatorError("El valor ingresado debe ser de tipo numerico del 0 al 9.");
         }
 
         value = numero;
     }
-
-
 }
 
 

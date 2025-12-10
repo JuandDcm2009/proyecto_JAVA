@@ -8,7 +8,7 @@ public class Email {
     private String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 
     public Email(String email) throws CrediYaError {
-        if (!email.matches(EMAIL_REGEX)) {
+        if (!email.matches(EMAIL_REGEX) || email == null) {
             throw new EmailValidatorError("Mani ojo con eso");
         }
         value = email;

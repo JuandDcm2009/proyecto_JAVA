@@ -1,5 +1,6 @@
 package com.ponscio.Facade;
 
+import java.math.BigDecimal;
 import java.util.List;
 import com.ponscio.model.Empleado;
 import com.ponscio.model.error.BussinesError;
@@ -20,15 +21,17 @@ public class MenuEmpleadoF {
     public String registrar(Empleado empleado) throws CrediYaError {
         
         if (empleado.getRol() > empleadoDAO.getRoles().size() || empleado.getRol() < 0) {
-            throw new CrediYaError("El valor ingresado no es valido", BussinesError.VALOR_FUERA_DE_RANGO);
+            throw new CrediYaError("El Rol ingresado no es valido", BussinesError.VALOR_FUERA_DE_RANGO);
         }
         
         if (empleadoDAO.validarEmpleado(empleado.getDocumentoNumero())) {
             throw new CrediYaError("El Documento ingresado ya esta registrado", BussinesError.VALOR_REPETIDO_NUMERO);
         }
 
+        if (empleado.getSalario().compareTo(BigDecimal.ZERO) < 1) throw new CrediYaError("El monto del salario debe ser mayor a 0", BussinesError.FORMATO_INVALIDO_NUMERO);
+
         if (empleadoDAO.setEmpleado(empleado)) return "\nEmpleado guardado.";
-        return "\nError inesperado.";
+        else throw new CrediYaError("Hubo un problema al intentar completar el proceso.", BussinesError.ERROR_FALLO_PROCESO);
     } 
 
     public List<Empleado> consultarByNombre(String nombre) {
@@ -48,7 +51,6 @@ public class MenuEmpleadoF {
         for (Empleado e: empleados) {
             resultados += e.mostrarInfo(empleadoDAO.getRoles());
         }
-    
          return resultados;
     }
 

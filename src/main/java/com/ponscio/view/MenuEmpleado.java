@@ -4,6 +4,7 @@ import com.ponscio.Facade.MenuEmpleadoF;
 import com.ponscio.model.Empleado;
 import com.ponscio.model.error.BussinesError;
 import com.ponscio.model.error.CrediYaError;
+import com.ponscio.model.valueobjects.Bigecimal;
 import com.ponscio.model.valueobjects.Email;
 import com.ponscio.model.valueobjects.Integer;
 import com.ponscio.repository.EmpleadoDAO;
@@ -43,28 +44,25 @@ public class MenuEmpleado {
     private void registrar() {
         try {
             var nombre = scan.leerTexto("> Ingrese el nombre del empleado: ");
-            int option = scan.leerInt(
-                    "> Ingrese el tipo de documento del cliente: \n\n> 1) Cedula de Ciudadania\n> 2) Cedula Extranjera\n");
-            String tipoD = null;
+            if (nombre == null) throw new CrediYaError("El nombre del empleado no puede ser nulo.", BussinesError.VALOR_INVALIDO_NULO);
 
-            if (option == 1)
-                tipoD = "CC";
-            else if (option == 2)
-                tipoD = "CE";
+            int option = scan.leerInt("> Ingrese el tipo de documento del cliente: \n\n> 1) Cedula de Ciudadania\n> 2) Cedula Extranjera\n");
+            String tipoD = null;
+            if (option == 1) tipoD = "CC";
+            else if (option == 2) tipoD = "CE";
+            if (tipoD == null) throw new CrediYaError("EL tipo de Cedula ingresado es invalido", BussinesError.VALOR_INEXISTENTE_NUMERO); 
 
             var documento = new Integer(scan.leerTexto("> Ingrese el numero de documento del empleado: "));
-            System.out.println("\n> Roles disponibles: \n");
 
+            System.out.println("\n> Roles disponibles: ");
             System.out.println(empleadoF.getRoles());
             var rol = scan.leerInt("> Ingrese el Rol del empleado: ");
-            var correo = new Email(scan.leerTexto("> Ingrese el correo del empleado: "));
-            var salario = scan.leerDouble("> Ingrese el salario del empleado: ");
-            if (salario < 1) throw new CrediYaError("El monto del salario debe ser mayor a 0", BussinesError.FORMATO_INVALIDO_NUMERO);
 
-            if (tipoD != null) {
-                Empleado empleado = new Empleado(0, nombre, documento.getValue(), tipoD, rol, correo.getValue(), salario);
-                empleadoF.registrar(empleado);
-            }
+            var correo = new Email(scan.leerTexto("> Ingrese el correo del empleado: "));
+            var salario = new Bigecimal(scan.leerBigDecimal("> Ingrese el salario del empleado: "), 10, 2);
+
+            Empleado empleado = new Empleado(0, nombre, documento.getValue(), tipoD, rol, correo.getValue(), salario.getValue());
+            empleadoF.registrar(empleado);
 
         } catch (CrediYaError e) {
             System.out.println(e.toString());
@@ -83,33 +81,35 @@ public class MenuEmpleado {
         System.out.println("\n====================================");
         var option = scan.leerInt("> Ingrese una opcion: ");
         List<Empleado> empleados = null;
-        switch (option) {
-            case 1:
-                var nombre = scan.leerTexto("> Ingrese el nombre a consultar: ").trim();
-                empleados = empleadoF.consultarByNombre(nombre);
-                break;
-            case 2:
-                var documento = scan.leerTexto("> Ingrese el documento a consultar: ").trim();
-                empleados = empleadoF.consultarByDocumento(documento);
-                break;
-            case 3:
-                var id = scan.leerInt("> Ingrese el ID a consultar: ");
-                empleados = empleadoF.consultarById(id);
-                break;
-            case 0:
-                return;
-            default:
-                System.out.println("\nError: Opcion no valida.");
-                break;
-        }
 
-        if (empleados == null) {
-            System.out.println("Error: No se pudo encontrar nada..");
-            return;
-        }
+        try {
+            switch (option) {
+                case 1:
+                    var nombre = scan.leerTexto("> Ingrese el nombre a consultar: ").trim();
+                    empleados = empleadoF.consultarByNombre(nombre);
+                    break;
+                case 2:
+                    var documento = scan.leerTexto("> Ingrese el documento a consultar: ").trim();
+                    empleados = empleadoF.consultarByDocumento(documento);
+                    break;
+                case 3:
+                    var id = scan.leerInt("> Ingrese el ID a consultar: ");
+                    empleados = empleadoF.consultarById(id);
+                    break;
+                case 0:
+                    return;
+                default:
+                    System.out.println("\nError: Opcion no valida.");
+                    break;
+            }
 
-        System.out.println(empleadoF.mostrarResultados(empleados));
-        System.out.println("\nResultados: " + empleados.size());
+            if (empleados == null) throw new CrediYaError("No se logro encontrar nada...", BussinesError.ERROR_DB_OBTENER_OBJETO);
+
+            System.out.println(empleadoF.mostrarResultados(empleados));
+            System.out.println("\nResultados: " + empleados.size());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 

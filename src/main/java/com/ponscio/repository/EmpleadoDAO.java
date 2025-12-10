@@ -13,15 +13,7 @@ import java.util.Map;
 import java.util.List;
 
 public class EmpleadoDAO {
-    private static EmpleadoDAO instance;
     private Map<Integer, String> roles;
-
-    public static EmpleadoDAO CrediyaDatos() {
-        if (instance == null) {
-            instance = new EmpleadoDAO();
-        }
-        return instance;
-    }
 
     public EmpleadoDAO() {
         this.roles = new HashMap();
@@ -41,7 +33,6 @@ public class EmpleadoDAO {
             while (result.next()) {
                 this.roles.put(result.getInt("id"), result.getString("nombre"));
             }
-            System.out.println("\nInformacion cargada correctmente!");
         } catch (Exception e) {
           System.out.println("\nError: No se pudo realizar la consulta sql");              
         }
@@ -51,7 +42,6 @@ public class EmpleadoDAO {
     private List<Empleado> getEmpleado(String sql, Object param, Boolean especificQuery) {
         System.out.println("Cargando informacion...");
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
-            
             if (param instanceof String && especificQuery) stmt.setObject(1, "%" + param + "%");
             else stmt.setObject(1, param);
             
@@ -79,7 +69,7 @@ public class EmpleadoDAO {
         var resultDocumentoTipo = result.getString("documento_tipo");
         var resultRol = result.getInt("rol_id");
         var resultCorreo = result.getString("correo");
-        var resultSalario = result.getDouble("salario");
+        var resultSalario = result.getBigDecimal("salario");
         System.out.println("\nInformacion cargada correctmente!");
         return new Empleado(resultId, resultNombre, resultDocumentoNumero, resultDocumentoTipo, resultRol, resultCorreo, resultSalario);
     }
@@ -95,7 +85,7 @@ public class EmpleadoDAO {
     public List<Empleado> getEmpleadoByDocumento(String documento) {
         return getEmpleado("SELECT id, nombre, documento_numero, documento_tipo, rol_id, correo, salario FROM empleados WHERE documento_numero = ?", documento, false);
     }
-    // 
+    
     public Boolean setEmpleado(Empleado empleado) {
         System.out.println("Cargando informacion...");
         var sql = "INSERT INTO empleados(nombre, documento_numero, documento_tipo, rol_id, correo, salario) VALUES(?,?,?,?,?,?)";
@@ -105,13 +95,14 @@ public class EmpleadoDAO {
             stmt.setString(3, empleado.getDocumentoTipo());
             stmt.setInt(4, empleado.getRol());
             stmt.setString(5, empleado.getCorreo());
-            stmt.setDouble(6, empleado.getSalario());
+            stmt.setBigDecimal(6, empleado.getSalario());
             int filas = stmt.executeUpdate();
-            System.out.println("\nInformacion cargada correctamente!");
+            if (filas > 0 ) System.out.println("\nInformacion cargada correctamente!");
             return filas > 0;
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            System.out.println("\nError: No se pudo registrar el empleado.");
+            System.out.println("Hubo un problema al intentar registrar el empleado.");
             if (e.getErrorCode() == 1048) System.out.println("\nError: Hubo un error al intentar insertar un campo NULO, Porfavor llenar toda la informacion");
             return false;
         }     
@@ -145,17 +136,4 @@ public class EmpleadoDAO {
             return false;
         }
     }
-
-    public Boolean eliminarEmpleado(int id) {
-        var sql = "DELETE FROM empleados WHERE id = ?";
-        try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            var filas = stmt.executeUpdate();
-            return filas > 0;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return false;
-        }
-    }
-
 }
