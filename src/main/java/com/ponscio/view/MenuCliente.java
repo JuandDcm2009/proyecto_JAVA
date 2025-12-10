@@ -5,7 +5,7 @@ import com.ponscio.model.Telefono;
 import com.ponscio.model.error.BussinesError;
 import com.ponscio.model.error.CrediYaError;
 import com.ponscio.model.valueobjects.Email;
-import com.ponscio.model.valueobjects.Integer;
+import com.ponscio.model.valueobjects.IntegerV;
 import com.ponscio.model.valueobjects.Letters;
 import com.ponscio.repository.ClienteDAO;
 import com.ponscio.repository.TelefonoDAO;
@@ -50,7 +50,7 @@ public class MenuCliente {
         try {
             String nombre = new Letters(scan.leerTexto("> Ingrese el nombre del cliente: ")).getValue();
             String tipoD = new TipoCedula(scan.leerInt("> Ingrese el tipo de documento del cliente: \n\n> 1) Cedula de Ciudadania\n> 2) Cedula Extranjera\n")).getValue();
-            String documento_numero = new Integer(scan.leerTexto("> Ingrese el documento del cliente")).getValue();
+            String documento_numero = new IntegerV(scan.leerTexto("> Ingrese el documento del cliente")).getValue();
             String correo = new Email(scan.leerTexto("> Ingrese el correo del cliente: ")).getValue();
             String telefono = new TelefonoV(scan.leerTexto("> Ingrese el telefono del cliente")).getValue();
             String pais_id = scan.leerTexto("> Ingrese el codigo del pais\nFormato: +123");

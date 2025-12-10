@@ -3,7 +3,7 @@ package com.ponscio.model.valueobjects;
 import com.ponscio.model.error.CrediYaError;
 import com.ponscio.model.error.IntegerValidatorError;
 
-public class Integer {
+public class IntegerV {
     
     private String value;
     
@@ -13,7 +13,7 @@ public class Integer {
 
     private String INT_REGEX = "\\d+";
     
-    public Integer(String numero) throws CrediYaError {
+    public IntegerV(String numero) throws CrediYaError {
         if (numero == null) throw new IntegerValidatorError("El valor ingresado es nulo.");
         
         if (!numero.matches(INT_REGEX) && numero != null) {
