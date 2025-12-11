@@ -31,7 +31,7 @@ public class PrestamoDAO {
         }
     }
 
-    public List<Prestamo> getPrestamo(int cliente_id) {
+    public List<Prestamo> getPrestamos(int cliente_id) {
         String sql = "SELECT id, cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado FROM prestamos WHERE cliente_id = ?";
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
             
