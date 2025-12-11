@@ -4,7 +4,7 @@ import com.ponscio.repository.ClienteDAO;
 import com.ponscio.repository.PaisDAO;
 import com.ponscio.repository.PrestamoDAO;
 import com.ponscio.repository.TelefonoDAO;
-import com.ponscio.service.GestorPrestamoDAO;
+import com.ponscio.service.GestorPrestamoDB;
 import com.ponscio.util.PrintAdvise;
 import com.ponscio.model.Cliente;
 import com.ponscio.model.Telefono;
@@ -22,14 +22,14 @@ public class MenuClienteF {
     private TelefonoDAO telefonoDAO;
     private PaisDAO paisDAO;
     private Map<String, Pais> paises;
-    private GestorPrestamoDAO gPrestamoDAO;
+    private GestorPrestamoDB gPrestamoDAO;
     
     public MenuClienteF(ClienteDAO clienteDAO, TelefonoDAO telefonoDAO) {
         this.clienteDAO = clienteDAO;
         this.telefonoDAO = telefonoDAO;
         this.paisDAO = new PaisDAO();
         this.paises = paisDAO.getPaises();
-        this.gPrestamoDAO = new GestorPrestamoDAO();
+        this.gPrestamoDAO = new GestorPrestamoDB();
     }
 
     public Boolean validarInteger(String numero) {

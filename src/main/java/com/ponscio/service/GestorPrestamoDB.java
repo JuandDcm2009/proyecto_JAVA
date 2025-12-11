@@ -4,10 +4,10 @@ import com.ponscio.repository.PrestamoDAO;
 import com.ponscio.model.Prestamo;
 import java.util.List;
 
-public class GestorPrestamoDAO {
+public class GestorPrestamoDB {
     private PrestamoDAO prestamoDAO;
 
-    public GestorPrestamoDAO() {
+    public GestorPrestamoDB() {
         this.prestamoDAO = new PrestamoDAO();    
     }
     

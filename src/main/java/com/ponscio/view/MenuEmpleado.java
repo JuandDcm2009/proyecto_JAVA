@@ -79,11 +79,11 @@ public class MenuEmpleado implements IMenu {
         try {
             switch (option) {
                 case 1:
-                    var nombre = scan.leerTexto("> Ingrese el nombre a consultar: ").trim();
+                    var nombre = new Letters(scan.leerTexto("> Ingrese el nombre a consultar: ").trim()).getValue();
                     empleados = empleadoF.consultarByNombre(nombre);
                     break;
                 case 2:
-                    var documento = scan.leerTexto("> Ingrese el documento a consultar: ").trim();
+                    var documento = new IntegerV(scan.leerTexto("> Ingrese el documento a consultar: ")).getValue();
                     empleados = empleadoF.consultarByDocumento(documento);
                     break;
                 case 3:
