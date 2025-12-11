@@ -10,10 +10,11 @@ import com.ponscio.model.valueobjects.Letters;
 import com.ponscio.repository.ClienteDAO;
 import com.ponscio.repository.TelefonoDAO;
 import com.ponscio.util.*;
+import com.ponscio.view.interfaz.IMenu;
 import com.ponscio.model.valueobjects.TelefonoV;
 import com.ponscio.model.valueobjects.TipoCedula;
 
-public class MenuCliente {
+public class MenuCliente implements IMenu {
 
     private Scan scan;
     private MenuClienteF clienteF;
@@ -37,7 +38,7 @@ public class MenuCliente {
         } while (option != 0);
     }
 
-    private void leerOpcion(int opcion) {
+    public void leerOpcion(int opcion) {
         switch (opcion) {
             case 1 -> registrar();
             case 2 -> listar();
@@ -83,7 +84,7 @@ public class MenuCliente {
         }
     }
     
-    private void mostrarMenu() {
+    public void mostrarMenu() {
         System.out.println("\n====================================");
         System.out.println("         MENU CLIENTES");
         System.out.println("====================================\n");

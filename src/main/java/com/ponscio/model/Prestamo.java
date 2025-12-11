@@ -2,8 +2,6 @@ package com.ponscio.model;
 
 import java.time.LocalDate;
 
-import com.mysql.cj.xdevapi.Client;
-
 public class Prestamo {
     private String estado;
     private double monto, interes;

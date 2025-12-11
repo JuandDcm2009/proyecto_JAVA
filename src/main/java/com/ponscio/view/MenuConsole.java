@@ -1,7 +1,8 @@
 package com.ponscio.view;
 import com.ponscio.util.Scan;
+import com.ponscio.view.interfaz.IMenu;
 
-public class MenuConsole {
+public class MenuConsole implements IMenu {
     
     private Scan scan;
     private MenuEmpleado mEmpleado;

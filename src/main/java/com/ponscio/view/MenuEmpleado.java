@@ -11,10 +11,11 @@ import com.ponscio.model.valueobjects.Letters;
 import com.ponscio.model.valueobjects.TipoCedula;
 import com.ponscio.repository.EmpleadoDAO;
 import com.ponscio.util.Scan;
+import com.ponscio.view.interfaz.IMenu;
 
 import java.util.List;
 
-public class MenuEmpleado {
+public class MenuEmpleado implements IMenu {
 
     private Scan scan;
     private EmpleadoDAO empleadoDAO;
