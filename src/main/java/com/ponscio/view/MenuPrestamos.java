@@ -4,8 +4,9 @@ import java.time.LocalDate;
 import com.ponscio.model.Prestamo;
 import com.ponscio.repository.PrestamoDAO;
 import com.ponscio.util.Scan;
+import com.ponscio.view.interfaz.IMenu;
 
-public class MenuPrestamos {
+public class MenuPrestamos implements IMenu {
     private Scan scan;
     private PrestamoDAO prestamoDAO;
 
@@ -44,9 +45,6 @@ public class MenuPrestamos {
         if (prestamoDAO.setPrestamo(prestamo)) {
             System.out.println("Muy bien, le vendiste el alma al diablo (campus)");
         }
-        
-        
-
     }
 
     public void mostrarMenu() {

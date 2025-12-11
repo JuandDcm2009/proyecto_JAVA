@@ -4,6 +4,7 @@ import com.ponscio.repository.ClienteDAO;
 import com.ponscio.repository.PaisDAO;
 import com.ponscio.repository.PrestamoDAO;
 import com.ponscio.repository.TelefonoDAO;
+import com.ponscio.util.PrintAdvise;
 import com.ponscio.model.Cliente;
 import com.ponscio.model.Telefono;
 import com.ponscio.model.error.BussinesError;
@@ -16,10 +17,10 @@ import java.util.List;
 
 public class MenuClienteF {
 
-    ClienteDAO clienteDAO;
-    TelefonoDAO telefonoDAO;
-    PaisDAO paisDAO;
-    Map<String, Pais> paises;
+    private ClienteDAO clienteDAO;
+    private TelefonoDAO telefonoDAO;
+    private PaisDAO paisDAO;
+    private Map<String, Pais> paises;
     private PrestamoDAO prestamoDAO;
     
     public MenuClienteF(ClienteDAO clienteDAO, TelefonoDAO telefonoDAO) {
@@ -60,16 +61,11 @@ public class MenuClienteF {
     }
 
 
-    public String registrarCliente(Cliente cliente) {
-        if (!validarInteger(cliente.getDocumentoNumero())) return "\nError: El documento solo puede contener numeros";
-        if (cliente.getDocumentoTipo().equals(null)) return "\nError: Tipo de documento invalido";
-        if (clienteDAO.validarCliente(cliente.getDocumentoNumero(), cliente.getDocumentoTipo())) return "\nError: Ya fue ingresado un cliente con ese documento.";
-        if (!cliente.getCorreo().contains("@")) return "\nError: El correo ingresado no es valido";
-
-        if (clienteDAO.setCliente(cliente)) {
-            return "Cliente registrado correctamente!";
-        }
-        return "\nError inesperado";
+    public String registrarCliente(Cliente cliente) throws CrediYaError {
+        if (clienteDAO.validarCliente(cliente.getDocumentoNumero(), cliente.getDocumentoTipo())) throw new CrediYaError(" Ya fue ingresado un cliente con ese documento.", BussinesError.VALOR_REPETIDO_NUMERO);
+        clienteDAO.setCliente(cliente);
+        if (clienteDAO.validarCliente(cliente.getCorreo())) throw new CrediYaError("El correo ingresado ya esta siendo usado por otro cliente", BussinesError.VALOR_REPETIDO_STRING);
+        throw new CrediYaError("Hubo un problema al intentar registrar el Cliente\nIntentelo de nuevo mas tarde.", BussinesError.ERROR_FALLO_PROCESO);
     }
 
     public String listarClientes() {
@@ -87,7 +83,7 @@ public class MenuClienteF {
     public String mostrarPrestamo(int id_cliente) throws Exception{
         
         if (!clienteDAO.validarCliente(id_cliente)) {
-            throw new CrediYaError("El ID del cliente ingresado no coincicde con niunguno en la base de datos", BussinesError.VALOR_INEXISTENTE_NUMERO);
+            throw new CrediYaError("El ID del cliente ingresado no coincicde con ninguno en la base de datos", BussinesError.VALOR_INEXISTENTE_NUMERO);
         }
 
         List<Prestamo> prestamos = prestamoDAO.getPrestamo(id_cliente);
@@ -100,11 +96,11 @@ public class MenuClienteF {
             throw new CrediYaError("Hubo un problema al intentar obtener el cliente", BussinesError.ERROR_DB_OBTENER_OBJETO);
         }
 
-        String prestamosInfo = "=============== PRESTAMOS DE " + cliente.getNombre() + "===============\n";
+        String prestamosInfo = "=============== PRESTAMOS DE " + cliente.getNombre() + " ===============\n";
         for (Prestamo prestamo : prestamos) {
             prestamosInfo = prestamo.mostrarInfo(cliente);
         }
-
+        new PrintAdvise("Resultados: " + prestamos.size());
         return prestamosInfo;
     }
 

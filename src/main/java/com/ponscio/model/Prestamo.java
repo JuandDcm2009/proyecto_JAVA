@@ -2,8 +2,6 @@ package com.ponscio.model;
 
 import java.time.LocalDate;
 
-import com.mysql.cj.xdevapi.Client;
-
 public class Prestamo {
     private String estado;
     private double monto, interes;
@@ -48,17 +46,22 @@ public class Prestamo {
     }
 
     public String mostrarInfo(Cliente cliente) {
+        double interesTotal = monto + (monto * (interes / 100.0));
         String info = "";
-        info += "\n============= Prestamo ==============";
+        info += "\n============= Prestamo ==============\n";
         info += "\n\tCliente ID: " + cliente.getId();
         info += "\n\tCliente: " + cliente.getNombre();
         info += "\n\tFecha inicio: " + fecha_inicio;
-        info += "\n\tMonto: " + monto;        
+        info += "\n\tMonto: " + String.format("%,.2f", monto);
         info += "\n\tInteres: " + interes +"%";
         info += "\n\tCuotas: " + cuotas;
         info += "\n\tEstado: " + estado;
-        info += "\n======================================";
+        info += "\n\tMonto con interes por cuota: " + String.format("%,.2f", interesTotal / cuotas);
+        info += "\n\tMonto con interes Total: " + String.format("%,.2f",interesTotal );
+        info += "\n\n=====================================";
         return info;
     }
-    
+
+    // 2000 * (20 / 100)
+    // 20% -> 2000 = 400
 }

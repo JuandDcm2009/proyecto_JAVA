@@ -12,7 +12,9 @@ public enum BussinesError {
     VALOR_INEXISTENTE_NUMERO  (1008, "El valor ingresado no existe."),
     ERROR_DB_OBTENER_OBJETO  (1009, "Hubo un error al intentar obtener los datos."),
     ERROR_FALLO_PROCESO  (1010, "Hubo un error al intentar gestionar el proceso."),
-    VALOR_INVALIDO_NULO  (1010, "El valor ingresado no puede ser NULO.");
+    VALOR_INVALIDO_NULO  (1011, "El valor ingresado no puede ser NULO."),
+    VALOR_INVALIDO_STRING  (1012, "El valor ingresado STRING es invalido."),
+    VALOR_REPETIDO_STRING  (1012, "El valor ingresado STRING ya fue ingresado y no es posible repetir el valor");
 
     private int code;
     private String description;
