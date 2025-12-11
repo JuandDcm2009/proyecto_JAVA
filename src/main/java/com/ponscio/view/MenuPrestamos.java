@@ -44,9 +44,6 @@ public class MenuPrestamos {
         if (prestamoDAO.setPrestamo(prestamo)) {
             System.out.println("Muy bien, le vendiste el alma al diablo (campus)");
         }
-        
-        
-
     }
 
     public void mostrarMenu() {
