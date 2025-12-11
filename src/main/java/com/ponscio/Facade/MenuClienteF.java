@@ -4,6 +4,7 @@ import com.ponscio.repository.ClienteDAO;
 import com.ponscio.repository.PaisDAO;
 import com.ponscio.repository.PrestamoDAO;
 import com.ponscio.repository.TelefonoDAO;
+import com.ponscio.service.GestorPrestamoDAO;
 import com.ponscio.util.PrintAdvise;
 import com.ponscio.model.Cliente;
 import com.ponscio.model.Telefono;
@@ -21,14 +22,14 @@ public class MenuClienteF {
     private TelefonoDAO telefonoDAO;
     private PaisDAO paisDAO;
     private Map<String, Pais> paises;
-    private PrestamoDAO prestamoDAO;
+    private GestorPrestamoDAO gPrestamoDAO;
     
     public MenuClienteF(ClienteDAO clienteDAO, TelefonoDAO telefonoDAO) {
         this.clienteDAO = clienteDAO;
         this.telefonoDAO = telefonoDAO;
         this.paisDAO = new PaisDAO();
         this.paises = paisDAO.getPaises();
-        this.prestamoDAO = new PrestamoDAO();
+        this.gPrestamoDAO = new GestorPrestamoDAO();
     }
 
     public Boolean validarInteger(String numero) {
@@ -86,7 +87,7 @@ public class MenuClienteF {
             throw new CrediYaError("El ID del cliente ingresado no coincicde con ninguno en la base de datos", BussinesError.VALOR_INEXISTENTE_NUMERO);
         }
 
-        List<Prestamo> prestamos = prestamoDAO.getPrestamo(id_cliente);
+        List<Prestamo> prestamos = gPrestamoDAO.getPrestamos(id_cliente);
         if (prestamos == null) {
             throw new CrediYaError("No se pudo obtener los prestamos de ese cliente\nVuelva a intentarlo mas tarde", BussinesError.ERROR_DB_OBTENER_OBJETO);
         }
