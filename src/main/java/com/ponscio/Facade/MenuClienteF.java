@@ -99,7 +99,7 @@ public class MenuClienteF {
 
         String prestamosInfo = "=============== PRESTAMOS DE " + cliente.getNombre() + " ===============\n";
         for (Prestamo prestamo : prestamos) {
-            prestamosInfo = prestamo.mostrarInfo(cliente);
+            prestamosInfo += prestamo.mostrarInfo(cliente);
         }
         new PrintAdvise("Resultados: " + prestamos.size());
         return prestamosInfo;

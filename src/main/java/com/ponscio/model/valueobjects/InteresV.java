@@ -14,7 +14,6 @@ public class InteresV {
 
         if (!interes.matches(DECIMAL_REGEX)) throw new CrediYaError("El interés debe ser un número decimal válido.",BussinesError.FORMATO_INVALIDO_NUMERO);
 
-
         double interesConvertido = Double.parseDouble(interes);
 
         if (interesConvertido <= 0) {

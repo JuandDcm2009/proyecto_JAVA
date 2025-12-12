@@ -40,7 +40,7 @@ public class PrestamoDAO {
             ResultSet result = stmt.executeQuery();
             List<Prestamo> prestamos = new ArrayList<>();
 
-            if (result.next()) {
+            while (result.next()) {
                 prestamos.add(new Prestamo(
                     result.getInt("id"),
                     result.getInt("cliente_id"),
