@@ -12,6 +12,15 @@ public class GestorPrestamoDB {
     }
     
     public List<Prestamo> getPrestamos(int cliente_id) {
-        return prestamoDAO.getPrestamos(cliente_id);
+        return prestamoDAO.getPrestamosByClienteId(cliente_id);
+    }
+
+    public List<Prestamo> getPrestamosById(int id) {
+        return prestamoDAO.getPrestamosById(id);
+    }
+
+    public Boolean validarPrestamoById(int id) {
+        return prestamoDAO.validarPrestamoById(id);
     }
 }
+

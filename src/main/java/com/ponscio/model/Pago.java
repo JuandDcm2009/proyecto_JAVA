@@ -8,6 +8,10 @@ public class Pago {
     private LocalDate fecha_pago;
     private double monto;
    
+    public void setMonto(double monto) {
+        this.monto = monto;
+    }
+
     public Pago(int id,  int prestamo_id, double monto, LocalDate fecha_pago) {
     
         this.id = id;

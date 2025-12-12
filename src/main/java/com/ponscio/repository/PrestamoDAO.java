@@ -31,11 +31,9 @@ public class PrestamoDAO {
         }
     }
 
-    public List<Prestamo> getPrestamos(int cliente_id) {
-        String sql = "SELECT id, cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado FROM prestamos WHERE cliente_id = ?";
+    public List<Prestamo> getPrestamos(String sql, Object param) {
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
-            
-            stmt.setInt(1, cliente_id);
+            stmt.setObject(1, param);
             
             ResultSet result = stmt.executeQuery();
             List<Prestamo> prestamos = new ArrayList<>();
@@ -57,6 +55,30 @@ public class PrestamoDAO {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
+        }
+    }
+
+    public List<Prestamo> getPrestamosByClienteId(int cliente_id) {
+        return getPrestamos("SELECT id, cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado FROM prestamos WHERE cliente_id = ?", cliente_id);
+    }
+
+    public List<Prestamo> getPrestamosById(int id) {
+        return getPrestamos("SELECT id, cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado FROM prestamos WHERE id = ?", id);
+    }
+
+    public Boolean validarPrestamoById(int id) {
+        String sql = "SELECT id, cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado FROM prestamos WHERE id = ?";
+        try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet result = stmt.executeQuery();
+            if (result.next()) {
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.toString());
+            return false;
         }
     }
 

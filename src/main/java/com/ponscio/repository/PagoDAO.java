@@ -14,10 +14,9 @@ import com.ponscio.model.Prestamo;
 
 public class PagoDAO {
       public Boolean setPago(Pago pago) {
-        String sql = "INSERT INTO prestamos(prestamo_id, monto, fecha_pago) VALUES(?, ?)";
-
+        String sql = "INSERT INTO pagos(prestamo_id, monto, fecha_pago) VALUES(?, ?, ?)";
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
-            stmt.setDouble(1, pago.getPrestamo_id());
+            stmt.setInt(1, pago.getPrestamo_id());
             stmt.setDouble(2, pago.getMonto());
             stmt.setDate(3, Date.valueOf(pago.getFecha_pago()));
             int filas  = stmt.executeUpdate();
@@ -25,6 +24,26 @@ public class PagoDAO {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
+        }
+    }
+
+    public List<Pago> getPagos(int prestamo_id) {
+        String sql = "SELECT id, prestamo_id, monto, fecha_pago FROM pagos WHERE prestamo_id = ?";
+        try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
+            stmt.setInt(1, prestamo_id);
+            ResultSet result  = stmt.executeQuery();
+            List<Pago> pagos = new ArrayList<>();
+            while (result.next()) {
+                pagos.add(new Pago(
+                    result.getInt("id"), 
+                    result.getInt("prestamo_id"), 
+                    result.getDouble("monto"),
+                    result.getDate("fecha_pago").toLocalDate()));
+            } 
+            return pagos;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
         }
     }
 }

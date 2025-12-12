@@ -3,9 +3,10 @@ import java.time.LocalDate;
 
 import com.ponscio.model.Pago;
 import com.ponscio.util.Scan;
+import com.ponscio.view.interfaz.IMenu;
 import com.ponscio.repository.PagoDAO;
 
-public class MenuPago{
+public class MenuPago implements IMenu {
     private Scan scan;
     private PagoDAO pagoDAO;
 
