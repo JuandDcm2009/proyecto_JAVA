@@ -6,13 +6,16 @@ import com.ponscio.model.error.BussinesError;
 import com.ponscio.model.error.CrediYaError;
 import com.ponscio.model.valueobjects.Bigecimal;
 import com.ponscio.model.valueobjects.Email;
-import com.ponscio.model.valueobjects.Integer;
+import com.ponscio.model.valueobjects.IntegerV;
+import com.ponscio.model.valueobjects.Letters;
+import com.ponscio.model.valueobjects.TipoCedula;
 import com.ponscio.repository.EmpleadoDAO;
 import com.ponscio.util.Scan;
+import com.ponscio.view.interfaz.IMenu;
 
 import java.util.List;
 
-public class MenuEmpleado {
+public class MenuEmpleado implements IMenu {
 
     private Scan scan;
     private EmpleadoDAO empleadoDAO;
@@ -43,25 +46,16 @@ public class MenuEmpleado {
 
     private void registrar() {
         try {
-            var nombre = scan.leerTexto("> Ingrese el nombre del empleado: ");
-            if (nombre == null) throw new CrediYaError("El nombre del empleado no puede ser nulo.", BussinesError.VALOR_INVALIDO_NULO);
-
-            int option = scan.leerInt("> Ingrese el tipo de documento del cliente: \n\n> 1) Cedula de Ciudadania\n> 2) Cedula Extranjera\n");
-            String tipoD = null;
-            if (option == 1) tipoD = "CC";
-            else if (option == 2) tipoD = "CE";
-            if (tipoD == null) throw new CrediYaError("EL tipo de Cedula ingresado es invalido", BussinesError.VALOR_INEXISTENTE_NUMERO); 
-
-            var documento = new Integer(scan.leerTexto("> Ingrese el numero de documento del empleado: "));
-
+            String nombre = new Letters(scan.leerTexto("> Ingrese el nombre del empleado: ")).getValue();
+            String tipoD = new TipoCedula(scan.leerInt("> Ingrese el tipo de documento del cliente: \n\n> 1) Cedula de Ciudadania\n> 2) Cedula Extranjera\n")).getValue();
+            String documento = new IntegerV(scan.leerTexto("> Ingrese el numero de documento del empleado: ")).getValue();
             System.out.println("\n> Roles disponibles: ");
             System.out.println(empleadoF.getRoles());
-            var rol = scan.leerInt("> Ingrese el Rol del empleado: ");
-
-            var correo = new Email(scan.leerTexto("> Ingrese el correo del empleado: "));
-            var salario = new Bigecimal(scan.leerBigDecimal("> Ingrese el salario del empleado: "), 10, 2);
-
-            Empleado empleado = new Empleado(0, nombre, documento.getValue(), tipoD, rol, correo.getValue(), salario.getValue());
+            int rol = Integer.parseInt(new IntegerV(scan.leerTexto("> Ingrese el Rol del empleado: ")).getValue());
+            
+            var correo = new Email(scan.leerTexto("> Ingrese el correo del empleado: ")).getValue();
+            var salario = new Bigecimal(scan.leerBigDecimal("> Ingrese el salario del empleado: "), 10, 2).getValue();
+            Empleado empleado = new Empleado(0, nombre, documento, tipoD, rol, correo, salario);
             empleadoF.registrar(empleado);
 
         } catch (CrediYaError e) {
@@ -85,11 +79,11 @@ public class MenuEmpleado {
         try {
             switch (option) {
                 case 1:
-                    var nombre = scan.leerTexto("> Ingrese el nombre a consultar: ").trim();
+                    var nombre = new Letters(scan.leerTexto("> Ingrese el nombre a consultar: ").trim()).getValue();
                     empleados = empleadoF.consultarByNombre(nombre);
                     break;
                 case 2:
-                    var documento = scan.leerTexto("> Ingrese el documento a consultar: ").trim();
+                    var documento = new IntegerV(scan.leerTexto("> Ingrese el documento a consultar: ")).getValue();
                     empleados = empleadoF.consultarByDocumento(documento);
                     break;
                 case 3:

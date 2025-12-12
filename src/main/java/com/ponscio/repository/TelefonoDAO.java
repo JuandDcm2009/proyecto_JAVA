@@ -25,6 +25,7 @@ public class TelefonoDAO {
                     if (result.next()) return result.getInt(1);
                 }
             }
+            
             return -1;
         } catch (SQLException e) {
             System.out.println(e.getMessage());

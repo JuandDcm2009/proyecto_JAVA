@@ -17,8 +17,6 @@ public class ClienteDAO {
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
             stmt.setInt(1, id);
             try (ResultSet result = stmt.executeQuery()) {
-                
-
                 if (result.next()) {
                     return new Cliente(
                         result.getInt("id"),
@@ -122,6 +120,24 @@ public class ClienteDAO {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("\nError: Hubo un problema al intentar validar el cliente");
+            return false;
+        }
+    }
+
+    public Boolean validarCliente(String correo) {
+        System.out.println("\nCargando Informacion....");
+        var sql = "SELECT correo FROM clientes WHERE correo = ?";
+        try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
+            stmt.setString(1, correo);
+            ResultSet result = stmt.executeQuery();
+            
+            if (!result.next()) {
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("\nError: Hubo un problema al intentar validar el correo");
             return false;
         }
     }
