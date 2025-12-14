@@ -1,11 +1,14 @@
 package com.ponscio.view;
+import com.ponscio.Facade.MenuEmpleadoF;
 import com.ponscio.util.Scan;
 import com.ponscio.view.interfaz.IMenu;
+import com.ponscio.view.*;
 
 public class MenuConsole implements IMenu {
     
     private Scan scan;
     private MenuEmpleado mEmpleado;
+    private MenuPago mPago;
     private MenuCliente mCliente;
     private MenuPrestamos mPrestamos;
 
@@ -14,6 +17,7 @@ public class MenuConsole implements IMenu {
         this.mEmpleado = new MenuEmpleado();
         this.mCliente = new MenuCliente();
         this.mPrestamos = new MenuPrestamos();
+        this.mPago = new MenuPago();
     }
 
     public void iniciar() {
@@ -30,6 +34,7 @@ public class MenuConsole implements IMenu {
             case 1 -> mEmpleado.iniciar();
             case 2 -> mCliente.iniciar();
             case 3 -> mPrestamos.iniciar();
+            case 4 -> mPago.iniciar();
             case 0 -> System.out.println("Gracias por elegir a Ponscio Studio's company");
         }
     }

@@ -1,7 +1,9 @@
 package com.ponscio.view;
 import java.time.LocalDate;
 
+import com.ponscio.Facade.MenuPagoF;
 import com.ponscio.model.Pago;
+import com.ponscio.model.valueobjects.MontoV;
 import com.ponscio.util.Scan;
 import com.ponscio.view.interfaz.IMenu;
 import com.ponscio.repository.PagoDAO;
@@ -9,10 +11,12 @@ import com.ponscio.repository.PagoDAO;
 public class MenuPago implements IMenu {
     private Scan scan;
     private PagoDAO pagoDAO;
+    private MenuPagoF menuPagoF;
 
    public MenuPago() {
         this.scan = new Scan();
         this.pagoDAO = new PagoDAO();
+        this.menuPagoF = new MenuPagoF(pagoDAO);
     }
 
     public void iniciar() {
@@ -27,27 +31,38 @@ public class MenuPago implements IMenu {
     public void leerOpcion(int opcion) {
         switch (opcion) {
             case 1 -> historialPago();
-            case 2 -> estadoPago();
+            case 2 -> pagarCuota();
             case 0 -> System.out.println("Regresando...");
         }
     }
 
+    private void pagarCuota() {
+        try {
+            int id_prestamo = scan.leerInt("> Ingrese el ID del prestamo a consignar: ");
+            menuPagoF.pagarCuota(new Pago(0, id_prestamo, 0, LocalDate.now()));
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.toString());
+        }
+    }
+
     private void historialPago() {
-
+        try {
+            int id_cliente = scan.leerInt("> Ingrese el ID del cliente: ");
+            System.out.println(menuPagoF.historialPagos(id_cliente));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.toString());
+        }
     }
-
-
-    private void estadoPago() {
-
-    }
-
 
     public void mostrarMenu() {
         System.out.println("\n====================================");
         System.out.println("         MENU PAGOS");
         System.out.println("====================================\n");
         System.out.println("*\t1) Ver historial de pagos");
-        System.out.println("*\t1) Mostrar estado de cuenta");
+        System.out.println("*\t2) Pagar cuota mensual");
         System.out.println("*\t0) Regresar al menu principal");
         System.out.println("\n====================================");
     } 

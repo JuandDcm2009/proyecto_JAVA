@@ -62,11 +62,13 @@ public class MenuClienteF {
     }
 
 
-    public String registrarCliente(Cliente cliente) throws CrediYaError {
+    public void registrarCliente(Cliente cliente) throws CrediYaError {
         if (clienteDAO.validarCliente(cliente.getDocumentoNumero(), cliente.getDocumentoTipo())) throw new CrediYaError(" Ya fue ingresado un cliente con ese documento.", BussinesError.VALOR_REPETIDO_NUMERO);
-        clienteDAO.setCliente(cliente);
+        
         if (clienteDAO.validarCliente(cliente.getCorreo())) throw new CrediYaError("El correo ingresado ya esta siendo usado por otro cliente", BussinesError.VALOR_REPETIDO_STRING);
-        throw new CrediYaError("Hubo un problema al intentar registrar el Cliente\nIntentelo de nuevo mas tarde.", BussinesError.ERROR_FALLO_PROCESO);
+        if (!clienteDAO.setCliente(cliente)) {
+            throw new CrediYaError("Hubo un problema al intentar registrar el Cliente\nIntentelo de nuevo mas tarde.", BussinesError.ERROR_FALLO_PROCESO);
+        }
     }
 
     public String listarClientes() {
@@ -87,7 +89,7 @@ public class MenuClienteF {
             throw new CrediYaError("El ID del cliente ingresado no coincicde con ninguno en la base de datos", BussinesError.VALOR_INEXISTENTE_NUMERO);
         }
 
-        List<Prestamo> prestamos = gPrestamoDAO.getPrestamos(id_cliente);
+        List<Prestamo> prestamos = gPrestamoDAO.getPrestamosById(id_cliente);
         if (prestamos == null) {
             throw new CrediYaError("No se pudo obtener los prestamos de ese cliente\nVuelva a intentarlo mas tarde", BussinesError.ERROR_DB_OBTENER_OBJETO);
         }

@@ -66,6 +66,11 @@ public class PrestamoDAO {
         return getPrestamos("SELECT id, cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado FROM prestamos WHERE id = ?", id);
     }
 
+    public List<Prestamo> getALLPrestamos(int id) {
+        return getPrestamos("SELECT id, cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado FROM prestamos WHERE id = ?", id);
+    }
+
+
     public Boolean validarPrestamoById(int id) {
         String sql = "SELECT id, cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado FROM prestamos WHERE id = ?";
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
@@ -79,6 +84,16 @@ public class PrestamoDAO {
             System.out.println(e.getMessage());
             System.out.println(e.toString());
             return false;
+        }
+    }
+
+    public void updateEstadoToPagado(int id_prestamo) {
+        String sql = "UPDATE prestamos SET estado = 'pagado' WHERE id = ?";
+        try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
+            stmt.setInt(1, id_prestamo);
+            int rows = stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());            
         }
     }
 

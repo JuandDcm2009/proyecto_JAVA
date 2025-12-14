@@ -46,4 +46,25 @@ public class PagoDAO {
             return null;
         }
     }
+
+    public List<Pago> getPagosByIdCliente(int id_cliente) {
+        String sql = 
+        "SELECT p.id, p.prestamo_id, p.monto, p.fecha_pago FROM pagos p JOIN prestamos pr ON p.prestamo_id = pr.id WHERE pr.cliente_id = ?";
+        try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
+            stmt.setInt(1, id_cliente);
+            ResultSet result  = stmt.executeQuery();
+            List<Pago> pagos = new ArrayList<>();
+            while (result.next()) {
+                pagos.add(new Pago(
+                    result.getInt("id"),
+                    result.getInt("prestamo_id"), 
+                    result.getDouble("monto"),
+                    result.getDate("fecha_pago").toLocalDate()));
+            } 
+            return pagos;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }

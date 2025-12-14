@@ -11,7 +11,7 @@ public class GestorPrestamoDB {
         this.prestamoDAO = new PrestamoDAO();    
     }
     
-    public List<Prestamo> getPrestamos(int cliente_id) {
+    public List<Prestamo> getPrestamosbyCliente(int cliente_id) {
         return prestamoDAO.getPrestamosByClienteId(cliente_id);
     }
 
@@ -21,6 +21,10 @@ public class GestorPrestamoDB {
 
     public Boolean validarPrestamoById(int id) {
         return prestamoDAO.validarPrestamoById(id);
+    }
+
+    public void updateEstadoToPagado(int id_prestamo) {
+        prestamoDAO.updateEstadoToPagado(id_prestamo);
     }
 }
 

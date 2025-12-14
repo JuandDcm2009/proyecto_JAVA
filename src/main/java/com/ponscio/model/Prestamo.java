@@ -50,19 +50,20 @@ public class Prestamo {
         String info = "";
         info += "\n============= Prestamo ==============\n";
         info += "\n\tID #" + id;
-        info += "\n\n\tCliente I D: " + cliente.getId();
+        info += "\n\n\tCliente ID: " + cliente.getId();
         info += "\n\tCliente: " + cliente.getNombre();
         info += "\n\tFecha inicio: " + fecha_inicio;
-        info += "\n\n\tMonto: " + String.format("%,.2f", monto);
+        info += "\n\n\tMonto: $" + String.format("%,.2f", monto);
         info += "\n\tInteres: " + interes +"%";
         info += "\n\tCuotas: " + cuotas;
-        info += "\n\tEstado: " + estado;
-        info += "\n\n\tMonto con interes por cuota: " + String.format("%,.2f", interesTotal / cuotas);
-        info += "\n\tMonto con interes Total: " + String.format("%,.2f",interesTotal );
+        info += "\n\tEstado: " + estado.toUpperCase();
+        info += "\n\n\tMonto con interes por cuota: $" + String.format("%,.2f", interesTotal / cuotas);
+        info += "\n\tMonto con interes Total: $" + String.format("%,.2f",interesTotal );
         info += "\n\n=====================================";
         return info;
     }
 
     // 2000 * (20 / 100)
     // 20% -> 2000 = 400
+    // 2000 + 400 = Interes Simple.
 }

@@ -61,7 +61,7 @@ public class MenuCliente implements IMenu {
             
             if ((idTelefono == -1)) throw new CrediYaError("Hubo un error al registrar el numero\nIntentelo de nuevo mas tarde.", BussinesError.ERROR_FALLO_PROCESO);
             Cliente cliente = new Cliente(0, nombre, documento_numero, tipoD, correo, idTelefono);
-            System.out.println(clienteF.registrarCliente(cliente));   
+            clienteF.registrarCliente(cliente);
 
         } catch (Exception e) {
             System.out.println(e.toString());
