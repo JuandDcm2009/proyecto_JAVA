@@ -4,7 +4,6 @@ import com.ponscio.Facade.MenuEmpleadoF;
 import com.ponscio.model.Empleado;
 import com.ponscio.model.error.BussinesError;
 import com.ponscio.model.error.CrediYaError;
-import com.ponscio.model.valueobjects.Bigecimal;
 import com.ponscio.model.valueobjects.Email;
 import com.ponscio.model.valueobjects.IntegerV;
 import com.ponscio.model.valueobjects.Letters;
@@ -50,6 +49,9 @@ public class MenuEmpleado implements IMenu {
             String nombre = new Letters(scan.leerTexto("> Ingrese el nombre del empleado: ")).getValue();
             String tipoD = new TipoCedula(scan.leerInt("> Ingrese el tipo de documento del cliente: \n\n> 1) Cedula de Ciudadania\n> 2) Cedula Extranjera\n")).getValue();
             String documento = new IntegerV(scan.leerTexto("> Ingrese el numero de documento del empleado: ")).getValue();
+            if (documento.length() > 10 || documento.length() < 8)
+                throw new CrediYaError("El numero documento debe ser entre 8 y 10 digitos", BussinesError.VALOR_FUERA_DE_RANGO);
+
             System.out.println("\n> Roles disponibles: ");
             System.out.println(empleadoF.getRoles());
             int rol = Integer.parseInt(new IntegerV(scan.leerTexto("> Ingrese el Rol del empleado: ")).getValue());
