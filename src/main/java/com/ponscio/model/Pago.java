@@ -39,7 +39,7 @@ public class Pago {
         String info = "";
         info += "\n=========== Informacion Pago ==========\n";
         info += "\n\n\tTitular: " + cliente.getNombre();
-        info += "\n\tID pago asociado: " + prestamo_id;
+        info += "\n\tID prestamo asociado: " + prestamo_id;
         info += "\n\tMonto pagado: $" + String.format("%,.2f", monto);
         info += "\n\tFecha de pago: " + fecha_pago;
         info += "\n\n=======================================";

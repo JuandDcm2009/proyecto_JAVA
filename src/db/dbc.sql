@@ -34,13 +34,3 @@ INSERT INTO paises (nombre, codigo, continente_id) VALUES ('Suecia', '+46', 3);
 INSERT INTO paises (nombre, codigo, continente_id) VALUES ('Noruega', '+47', 3);
 INSERT INTO paises (nombre, codigo, continente_id) VALUES ('Suiza', '+41', 3);
 
-
-INSERT INTO prestamos (cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado) VALUES (1, 3, 15000, 12.5, 12, '2025-01-15', 'pendiente');
-
-INSERT INTO prestamos (cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado) VALUES (2, 4, 8000, 10.0, 8, '2025-02-01', 'pagado');
-
-INSERT INTO prestamos (cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado) VALUES (3, 2, 25000, 14.0, 24, '2025-03-10', 'pendiente');
-
-INSERT INTO prestamos (cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado) VALUES (4, 1, 5000, 9.5, 6, '2025-01-05', 'pendiente');
-
-INSERT INTO prestamos (cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado) VALUES (5, 3, 12000, 11.0, 10, '2025-04-20', 'pagado');

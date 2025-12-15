@@ -44,6 +44,7 @@ public class MenuCliente implements IMenu {
             case 2 -> listar();
             case 3 -> mostrarPrestamos();
             case 0 -> System.out.println("Regresando...");
+            default -> System.out.println("Opcion invalida");
         }
     }
 

@@ -46,6 +46,7 @@ public class MenuPagoF {
 
             if (pagos.size() == prestamo.getCuotas()) {
                 new PrintAdvise("\n* Felicidades, el Prestamo ha sido pagado en su totalidad! *\nGracias por usar CrediYa.");
+                gPrestamoDB.updateEstadoToPagado(pago.getPrestamo_id());
                 return;
             }
             return;

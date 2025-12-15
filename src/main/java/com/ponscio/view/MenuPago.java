@@ -32,6 +32,7 @@ public class MenuPago implements IMenu {
             case 1 -> historialPago();
             case 2 -> pagarCuota();
             case 0 -> System.out.println("Regresando...");
+            default -> System.out.println("Opcion invalida");
         }
     }
 

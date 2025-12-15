@@ -41,6 +41,7 @@ public class MenuEmpleado implements IMenu {
             case 1 -> registrar();
             case 2 -> consultar();
             case 0 -> System.out.println("Regresando...");
+            default -> System.out.println("Opcion invalida");
         }
     }
 

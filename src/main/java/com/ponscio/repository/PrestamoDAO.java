@@ -1,5 +1,6 @@
 package com.ponscio.repository;
 
+import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -9,13 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import com.ponscio.configuration.ConnectionDB;
 import com.ponscio.model.Prestamo;
+import com.ponscio.util.PrintAdvise;
 
 public class PrestamoDAO {
     
     public Boolean setPrestamo(Prestamo prestamo) {
         String sql = "INSERT INTO prestamos(cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
+        try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, prestamo.getCliente_id());
             stmt.setInt(2, prestamo.getEmpleado_id());
             stmt.setDouble(3, prestamo.getMonto());
@@ -24,6 +26,12 @@ public class PrestamoDAO {
             stmt.setDate(6, Date.valueOf(prestamo.getFecha_inicio()));
             stmt.setString(7, prestamo.getEstado());
             int filas  = stmt.executeUpdate();
+
+            if (filas > 0) {
+                try (ResultSet result = stmt.getGeneratedKeys()) {
+                    if (result.next()) new PrintAdvise("Prestamo registrado con el ID #" + result.getInt(1));
+                }
+            }            
             return filas > 0;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -33,7 +41,7 @@ public class PrestamoDAO {
 
     public List<Prestamo> getPrestamos(String sql, Object param) {
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
-            stmt.setObject(1, param);
+            if (param != null ) stmt.setObject(1, param);
             
             ResultSet result = stmt.executeQuery();
             List<Prestamo> prestamos = new ArrayList<>();
@@ -66,8 +74,8 @@ public class PrestamoDAO {
         return getPrestamos("SELECT id, cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado FROM prestamos WHERE id = ?", id);
     }
 
-    public List<Prestamo> getALLPrestamos(int id) {
-        return getPrestamos("SELECT id, cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado FROM prestamos WHERE id = ?", id);
+    public List<Prestamo> getALLPrestamos() {
+        return getPrestamos("SELECT id, cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado FROM prestamos", null);
     }
 
 

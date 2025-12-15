@@ -37,6 +37,7 @@ public class MenuPrestamos implements IMenu {
         switch (opcion) {
             case 1 -> crearPrestamo();
             case 0 -> System.out.println("Regresando...");
+            default -> System.out.println("Opcion invalida");
         }
     }
 

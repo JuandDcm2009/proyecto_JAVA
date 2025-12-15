@@ -13,4 +13,8 @@ public class GestorClienteDB {
         return clienteDAO.getClienteById(id_cliente);
     }
 
+    public Boolean validarClienteById(int id_cliente) {
+        return clienteDAO.validarCliente(id_cliente);
+    }
+
 }
