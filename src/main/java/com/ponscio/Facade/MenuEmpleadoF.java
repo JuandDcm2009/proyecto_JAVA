@@ -21,17 +21,17 @@ public class MenuEmpleadoF {
     public String registrar(Empleado empleado) throws CrediYaError {
         
         if (empleado.getRol() > empleadoDAO.getRoles().size() || empleado.getRol() < 0) {
-            throw new CrediYaError("El Rol ingresado no es valido", BussinesError.VALOR_FUERA_DE_RANGO);
+            throw new CrediYaError("\nEl Rol ingresado no es valido", BussinesError.VALOR_FUERA_DE_RANGO);
         }
         
         if (empleadoDAO.validarEmpleado(empleado.getDocumentoNumero())) {
-            throw new CrediYaError("El Documento ingresado ya esta registrado", BussinesError.VALOR_REPETIDO_NUMERO);
+            throw new CrediYaError("\nEl Documento ingresado ya esta registrado", BussinesError.VALOR_REPETIDO_NUMERO);
         }
 
-        if (empleado.getSalario().compareTo(BigDecimal.ZERO) < 1) throw new CrediYaError("El monto del salario debe ser mayor a 0", BussinesError.FORMATO_INVALIDO_NUMERO);
+        if (empleado.getSalario() < 1) throw new CrediYaError("\nEl monto del salario debe ser mayor a 0", BussinesError.FORMATO_INVALIDO_NUMERO);
 
         if (empleadoDAO.setEmpleado(empleado)) return "\nEmpleado guardado.";
-        else throw new CrediYaError("Hubo un problema al intentar completar el proceso.", BussinesError.ERROR_FALLO_PROCESO);
+        else throw new CrediYaError("\nHubo un problema al intentar completar el proceso.", BussinesError.ERROR_FALLO_PROCESO);
     } 
 
     public List<Empleado> consultarByNombre(String nombre) {

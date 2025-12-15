@@ -5,9 +5,9 @@ import java.util.Map;
 public class Empleado {
     private int id, rol_id;
     private String nombre, correo, documento_numero, documento_tipo;
-    private BigDecimal salario;
+    private double salario;
     
-    public Empleado(int id, String nombre, String documento_numero, String documento_tipo,int rol_id, String correo, BigDecimal salario) {
+    public Empleado(int id, String nombre, String documento_numero, String documento_tipo,int rol_id, String correo, double salario) {
         this.id = id;
         this.nombre = nombre;
         this.documento_numero = documento_numero;
@@ -35,7 +35,7 @@ public class Empleado {
     public String getCorreo() {
         return correo;
     }
-    public BigDecimal getSalario() {
+    public double getSalario() {
         return salario;
     }
     
@@ -47,7 +47,7 @@ public class Empleado {
         info += "\n\tNombre: "+nombre;
         info += "\n\tDocumento: "+documento_numero+" ("+documento_tipo+")";
         info += "\n\tCorreo: "+correo;
-        info += "\n\tSalario actual: $"+ salario;
+        info += "\n\tSalario actual: $"+ String.format("%,.2f", salario);
         info += "\n\tCargo Actual: "+ roles.get(rol_id);
         info += "\n\n==========================================";
         return info;

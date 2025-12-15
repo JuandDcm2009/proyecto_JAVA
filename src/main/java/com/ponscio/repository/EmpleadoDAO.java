@@ -3,6 +3,7 @@ package com.ponscio.repository;
 import com.ponscio.configuration.ConnectionDB;
 import com.ponscio.model.Empleado;
 
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -69,7 +70,7 @@ public class EmpleadoDAO {
         var resultDocumentoTipo = result.getString("documento_tipo");
         var resultRol = result.getInt("rol_id");
         var resultCorreo = result.getString("correo");
-        var resultSalario = result.getBigDecimal("salario");
+        var resultSalario = result.getDouble("salario");
         System.out.println("\nInformacion cargada correctmente!");
         return new Empleado(resultId, resultNombre, resultDocumentoNumero, resultDocumentoTipo, resultRol, resultCorreo, resultSalario);
     }
@@ -95,14 +96,18 @@ public class EmpleadoDAO {
             stmt.setString(3, empleado.getDocumentoTipo());
             stmt.setInt(4, empleado.getRol());
             stmt.setString(5, empleado.getCorreo());
-            stmt.setBigDecimal(6, empleado.getSalario());
+            stmt.setDouble(6, empleado.getSalario());
             int filas = stmt.executeUpdate();
             if (filas > 0 ) System.out.println("\nInformacion cargada correctamente!");
             return filas > 0;
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             System.out.println("Hubo un problema al intentar registrar el empleado.");
+            if (e.getErrorCode() == 1264) {
+                System.out.println("\nEl salario ingresado esta fuera de RANGO\n Maximo 10 DIGITOS en total");
+                return false;
+            }
+            System.out.println(e.getMessage());
             if (e.getErrorCode() == 1048) System.out.println("\nError: Hubo un error al intentar insertar un campo NULO, Porfavor llenar toda la informacion");
             return false;
         }     
@@ -136,4 +141,5 @@ public class EmpleadoDAO {
             return false;
         }
     }
+    
 }

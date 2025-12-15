@@ -8,6 +8,7 @@ import com.ponscio.model.valueobjects.Bigecimal;
 import com.ponscio.model.valueobjects.Email;
 import com.ponscio.model.valueobjects.IntegerV;
 import com.ponscio.model.valueobjects.Letters;
+import com.ponscio.model.valueobjects.MontoV;
 import com.ponscio.model.valueobjects.TipoCedula;
 import com.ponscio.repository.EmpleadoDAO;
 import com.ponscio.util.Scan;
@@ -54,7 +55,9 @@ public class MenuEmpleado implements IMenu {
             int rol = Integer.parseInt(new IntegerV(scan.leerTexto("> Ingrese el Rol del empleado: ")).getValue());
             
             var correo = new Email(scan.leerTexto("> Ingrese el correo del empleado: ")).getValue();
-            var salario = new Bigecimal(scan.leerBigDecimal("> Ingrese el salario del empleado: "), 10, 2).getValue();
+
+            var salario = new MontoV(scan.leerTexto("> Ingrese el salario del empleado: ")).getValue();
+
             Empleado empleado = new Empleado(0, nombre, documento, tipoD, rol, correo, salario);
             empleadoF.registrar(empleado);
 

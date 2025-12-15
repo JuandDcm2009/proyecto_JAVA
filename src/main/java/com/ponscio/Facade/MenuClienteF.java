@@ -89,7 +89,7 @@ public class MenuClienteF {
             throw new CrediYaError("El ID del cliente ingresado no coincicde con ninguno en la base de datos", BussinesError.VALOR_INEXISTENTE_NUMERO);
         }
 
-        List<Prestamo> prestamos = gPrestamoDAO.getPrestamosById(id_cliente);
+        List<Prestamo> prestamos = gPrestamoDAO.getPrestamosbyCliente(id_cliente);
         if (prestamos == null) {
             throw new CrediYaError("No se pudo obtener los prestamos de ese cliente\nVuelva a intentarlo mas tarde", BussinesError.ERROR_DB_OBTENER_OBJETO);
         }
@@ -98,7 +98,7 @@ public class MenuClienteF {
         if (cliente == null) {
             throw new CrediYaError("Hubo un problema al intentar obtener el cliente", BussinesError.ERROR_DB_OBTENER_OBJETO);
         }
-
+        System.out.println(prestamos.size());
         String prestamosInfo = "=============== PRESTAMOS DE " + cliente.getNombre() + " ===============\n";
         for (Prestamo prestamo : prestamos) {
             prestamosInfo += prestamo.mostrarInfo(cliente);

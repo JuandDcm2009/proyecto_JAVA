@@ -29,17 +29,23 @@ public class MenuPagoF {
 
         if (pagos.size() < prestamo.getCuotas()) {
             double interesTotal = prestamo.getMonto() + (prestamo.getMonto() * (prestamo.getInteres() / 100.0));
-            Pago pagoAPagar = new Pago(pago.getId(), 
+            
+            Pago pagoAPagar = new Pago(pago.getId(),
             pago.getPrestamo_id(), 
             interesTotal / prestamo.getCuotas(),
             pago.getFecha_pago());
-            pagoDAO.setPago(pagoAPagar);
-            new PrintAdvise("Consignacion correctamente registrada");
-            new PrintAdvise(pago.mostrarInfo(gClienteDB.getClienteById(prestamo.getCliente_id())));
 
+            pagoDAO.setPago(pagoAPagar);
+
+            new PrintAdvise("Consignacion correctamente registrada");
             pagos = pagoDAO.getPagos(pago.getPrestamo_id());
+
+            Cliente clienteActual = gClienteDB.getClienteById(prestamo.getCliente_id());
+
+            new PrintAdvise(pagoAPagar.mostrarInfo(clienteActual));
+
             if (pagos.size() == prestamo.getCuotas()) {
-                new PrintAdvise("\n* Felicidades, le Prestamo ha sido pagado en su totalidad! *\nGracias por usar con CrediYa.");
+                new PrintAdvise("\n* Felicidades, el Prestamo ha sido pagado en su totalidad! *\nGracias por usar CrediYa.");
                 return;
             }
             return;

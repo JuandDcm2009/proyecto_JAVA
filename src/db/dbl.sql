@@ -31,7 +31,7 @@ CREATE TABLE empleados (
     documento_tipo ENUM('CC', 'CE') NOT NULL,
     rol_id INT NOT NULL,
     correo VARCHAR(80) UNIQUE NOT NULL,
-    salario DECIMAL(10,2) NOT NULL,
+    salario DECIMAL(15,2) NOT NULL,
     FOREIGN KEY (rol_id) REFERENCES roles(id)
 );
 

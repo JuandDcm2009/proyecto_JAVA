@@ -4,12 +4,10 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import com.ponscio.configuration.ConnectionDB;
 import com.ponscio.model.Pago;
-import com.ponscio.model.Prestamo;
 
 
 public class PagoDAO {

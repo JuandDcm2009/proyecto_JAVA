@@ -13,12 +13,11 @@ public class Pago {
     }
 
     public Pago(int id,  int prestamo_id, double monto, LocalDate fecha_pago) {
-    
         this.id = id;
         this.prestamo_id = prestamo_id;
         this.fecha_pago = fecha_pago;
         this.monto = monto;
-}  
+    }  
 
     public int getId() {
         return id;
@@ -41,7 +40,7 @@ public class Pago {
         info += "\n=========== Informacion Pago ==========\n";
         info += "\n\n\tTitular: " + cliente.getNombre();
         info += "\n\tID pago asociado: " + prestamo_id;
-        info += "\n\tMonto pagado: $" + monto;
+        info += "\n\tMonto pagado: $" + String.format("%,.2f", monto);
         info += "\n\tFecha de pago: " + fecha_pago;
         info += "\n\n=======================================";
         return info;
