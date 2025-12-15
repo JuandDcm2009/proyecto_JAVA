@@ -11,6 +11,7 @@ public class MenuConsole implements IMenu {
     private MenuPago mPago;
     private MenuCliente mCliente;
     private MenuPrestamos mPrestamos;
+    private MenuPago mPagos;
 
     public MenuConsole() {
         this.scan = new Scan();

@@ -3,7 +3,6 @@ import java.time.LocalDate;
 
 import com.ponscio.Facade.MenuPagoF;
 import com.ponscio.model.Pago;
-import com.ponscio.model.valueobjects.MontoV;
 import com.ponscio.util.Scan;
 import com.ponscio.view.interfaz.IMenu;
 import com.ponscio.repository.PagoDAO;
