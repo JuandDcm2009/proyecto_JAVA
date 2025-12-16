@@ -3,6 +3,7 @@ import java.util.List;
 import com.ponscio.model.Empleado;
 import com.ponscio.model.error.BussinesError;
 import com.ponscio.model.error.CrediYaError;
+import com.ponscio.repository.BufferWriter;
 import com.ponscio.repository.EmpleadoDAO;
 
 
@@ -11,9 +12,11 @@ import java.util.Map;
 public class MenuEmpleadoF {
 
     private EmpleadoDAO empleadoDAO;
+    private BufferWriter writer;
 
     public MenuEmpleadoF(EmpleadoDAO empleadoDAO) {
         this.empleadoDAO = empleadoDAO;
+        this.writer = new BufferWriter("registro/Empleados.txt");
     }
 
     public String registrar(Empleado empleado) throws CrediYaError {
@@ -28,8 +31,13 @@ public class MenuEmpleadoF {
 
         if (empleado.getSalario() < 1) throw new CrediYaError("\nEl monto del salario debe ser mayor a 0", BussinesError.FORMATO_INVALIDO_NUMERO);
 
-        if (empleadoDAO.setEmpleado(empleado)) return "\nEmpleado guardado.";
+        if (empleadoDAO.setEmpleado(empleado)) {
+            writer.escribir(empleado.mostrarInfo(empleadoDAO.getRoles()));
+            return "\nEmpleado guardado.";
+        }
         else throw new CrediYaError("\nHubo un problema al intentar completar el proceso.", BussinesError.ERROR_FALLO_PROCESO);
+
+        
     } 
 
     public List<Empleado> consultarByNombre(String nombre) {

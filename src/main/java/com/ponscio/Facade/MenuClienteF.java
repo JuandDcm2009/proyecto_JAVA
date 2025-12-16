@@ -1,5 +1,6 @@
 package com.ponscio.Facade;
 
+import com.ponscio.repository.BufferWriter;
 import com.ponscio.repository.ClienteDAO;
 import com.ponscio.repository.PaisDAO;
 import com.ponscio.repository.TelefonoDAO;
@@ -22,6 +23,7 @@ public class MenuClienteF {
     private PaisDAO paisDAO;
     private Map<String, Pais> paises;
     private GestorPrestamoDB gPrestamoDAO;
+    private BufferWriter writer;
     
     public MenuClienteF(ClienteDAO clienteDAO, TelefonoDAO telefonoDAO) {
         this.clienteDAO = clienteDAO;
@@ -29,13 +31,17 @@ public class MenuClienteF {
         this.paisDAO = new PaisDAO();
         this.paises = paisDAO.getPaises();
         this.gPrestamoDAO = new GestorPrestamoDB();
+        this.writer = new BufferWriter("registro/Clientes.txt");
     }
 
     public Boolean validarInteger(String numero) {
         return numero != null && numero.matches("\\d+");
     }
 
-    public int registrarNumero(Telefono telefono) {
+    public int registrarNumero(Telefono telefono) throws CrediYaError {
+        if (telefonoDAO.validarTelefonoByNumero(telefono.getNumero())) 
+            throw new CrediYaError("El telefono ingresado ya existe.", BussinesError.VALOR_REPETIDO_NUMERO);
+
         int idTelefono = telefonoDAO.setTelefono(telefono);
         if (idTelefono > 0 && validarInteger(telefono.getNumero())) {
             return idTelefono;
@@ -64,12 +70,20 @@ public class MenuClienteF {
     public void registrarCliente(Cliente cliente) throws CrediYaError {
         if (clienteDAO.validarClienteByDocumento(cliente.getDocumentoNumero()))
             throw new CrediYaError(" Ya fue ingresado un cliente con ese documento.", BussinesError.VALOR_REPETIDO_NUMERO);
-        
+
         if (clienteDAO.validarCliente(cliente.getCorreo())) 
             throw new CrediYaError("El correo ingresado ya esta siendo usado por otro cliente", BussinesError.VALOR_REPETIDO_STRING);
+        
+        
+
         if (!clienteDAO.setCliente(cliente)) {
             throw new CrediYaError("Hubo un problema al intentar registrar el Cliente\nIntentelo de nuevo mas tarde.", BussinesError.ERROR_FALLO_PROCESO);
         }
+
+        int pais_id = telefonoDAO.getTelefonoById(cliente.getTelefonoId()).getPais_id();
+        String codigo = paisDAO.getPaisById(pais_id).getCodigo();
+        Telefono telefono = telefonoDAO.getTelefonoById(cliente.getTelefonoId());
+        writer.escribir(cliente.mostrarInfo(telefono, codigo));
     }
 
     public String listarClientes() {

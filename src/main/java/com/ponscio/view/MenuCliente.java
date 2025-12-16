@@ -53,6 +53,9 @@ public class MenuCliente implements IMenu {
             String nombre = new Letters(scan.leerTexto("> Ingrese el nombre del cliente: ")).getValue();
             String tipoD = new TipoCedula(scan.leerInt("> Ingrese el tipo de documento del cliente: \n\n> 1) Cedula de Ciudadania\n> 2) Cedula Extranjera\n")).getValue();
             String documento_numero = new IntegerV(scan.leerTexto("> Ingrese el documento del cliente")).getValue();
+            if (documento_numero.length() > 10 || documento_numero.length() < 8)
+                throw new CrediYaError("El numero documento debe ser entre 8 y 10 digitos", BussinesError.VALOR_FUERA_DE_RANGO);
+
             String correo = new Email(scan.leerTexto("> Ingrese el correo del cliente: ")).getValue();
             String telefono = new TelefonoV(scan.leerTexto("> Ingrese el telefono del cliente")).getValue();
             String pais_id = scan.leerTexto("> Ingrese el codigo del pais\nFormato: +123");

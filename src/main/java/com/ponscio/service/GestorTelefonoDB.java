@@ -13,5 +13,9 @@ public class GestorTelefonoDB {
     public Telefono getTelefonoById(int id_telefono) {
         return telefonoDAO.getTelefonoById(id_telefono);
     }
+
+    public Boolean validarTelefonoByNumero(String numero) {
+        return telefonoDAO.validarTelefonoByNumero(numero);
+    }
 }
 

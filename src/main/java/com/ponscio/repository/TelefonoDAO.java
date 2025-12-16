@@ -57,5 +57,21 @@ public class TelefonoDAO {
         }
     }
 
+    public Boolean validarTelefonoByNumero(String numero) {
+        var sql = "SELECT numero FROM telefonos_clientes WHERE numero = ?";
+        try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
+            stmt.setString(1, numero);
+            ResultSet result = stmt.executeQuery();
+            if (result.next()) return true;
+            return false;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Hubo un problema al validar el telefono.");
+            return false;
+        }
+
+    }
+
+
     
 }

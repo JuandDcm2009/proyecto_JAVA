@@ -5,6 +5,7 @@ import com.ponscio.model.Pago;
 import com.ponscio.model.Prestamo;
 import com.ponscio.model.error.BussinesError;
 import com.ponscio.model.error.CrediYaError;
+import com.ponscio.repository.BufferWriter;
 import com.ponscio.repository.PagoDAO;
 import com.ponscio.service.GestorClienteDB;
 import com.ponscio.service.GestorPrestamoDB;
@@ -16,11 +17,13 @@ public class MenuPagoF {
     private PagoDAO pagoDAO;
     private GestorClienteDB gClienteDB;
     private GestorPrestamoDB gPrestamoDB;
+    private BufferWriter writer;
 
     public MenuPagoF(PagoDAO pagoDAO) {
         this.pagoDAO = pagoDAO;
         this.gPrestamoDB = new GestorPrestamoDB();
         this.gClienteDB = new GestorClienteDB();
+        this.writer = new BufferWriter("registro/Pagos.txt");
     }
 
     public void pagarCuota(Pago pago) throws CrediYaError { 
@@ -43,6 +46,7 @@ public class MenuPagoF {
             Cliente clienteActual = gClienteDB.getClienteById(prestamo.getCliente_id());
 
             new PrintAdvise(pagoAPagar.mostrarInfo(clienteActual));
+            writer.escribir(pagoAPagar.mostrarInfo(clienteActual));
 
             if (pagos.size() == prestamo.getCuotas()) {
                 new PrintAdvise("\n* Felicidades, el Prestamo ha sido pagado en su totalidad! *\nGracias por usar CrediYa.");
