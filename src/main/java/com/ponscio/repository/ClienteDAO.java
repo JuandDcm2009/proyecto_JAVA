@@ -12,10 +12,9 @@ import java.util.List;
 
 public class ClienteDAO {
 
-    public Cliente getClienteById(int id) {    
-        var sql = "SELECT id, nombre, documento_numero, documento_tipo, correo, telefono_id FROM clientes WHERE id = ?";
+    public Cliente getClienteBy(String sql,Object param) {    
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
-            stmt.setInt(1, id);
+            stmt.setObject(1, param);
             try (ResultSet result = stmt.executeQuery()) {
                 if (result.next()) {
                     return new Cliente(
@@ -36,6 +35,14 @@ public class ClienteDAO {
             }
             return null;
         }
+    }
+
+    public Cliente getClienteById(int id) {
+        return getClienteBy("SELECT id, nombre, documento_numero, documento_tipo, correo, telefono_id FROM clientes WHERE id = ?", id);
+    }
+
+    public Cliente getClienteByDocumento(String documento_numero) {
+        return getClienteBy("SELECT id, nombre, documento_numero, documento_tipo, correo, telefono_id FROM clientes WHERE documento_numero = ?", documento_numero);
     }
     
     public List<Cliente> getClientes() {

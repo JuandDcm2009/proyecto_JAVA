@@ -101,12 +101,24 @@ public class MenuClienteF {
             throw new CrediYaError("Hubo un problema al intentar obtener el cliente", BussinesError.ERROR_DB_OBTENER_OBJETO);
         }
         System.out.println(prestamos.size());
-        String prestamosInfo = "=============== PRESTAMOS DE " + cliente.getNombre() + " ===============\n";
+        String prestamosInfo = "=============== Prestamos de " + cliente.getNombre() + " ===============\n";
         for (Prestamo prestamo : prestamos) {
             prestamosInfo += prestamo.mostrarInfo(cliente);
         }
         new PrintAdvise("Resultados: " + prestamos.size());
         return prestamosInfo;
+    }
+
+    public int getClienteByDocumento(String documento) throws CrediYaError {
+        if (!clienteDAO.validarClienteByDocumento(documento)) 
+            throw new CrediYaError("El documento ingresado es invalido.", BussinesError.VALOR_INEXISTENTE_NUMERO);
+
+        Cliente cliente = clienteDAO.getClienteByDocumento(documento);
+        
+        if (cliente == null)
+            throw new CrediYaError("Hubo un problema al consultar por el cliente", BussinesError.ERROR_FALLO_PROCESO);
+
+        return cliente.getId();
     }
 
 }

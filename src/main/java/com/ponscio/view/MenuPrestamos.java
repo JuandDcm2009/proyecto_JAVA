@@ -7,6 +7,7 @@ import com.ponscio.model.Prestamo;
 import com.ponscio.model.error.BussinesError;
 import com.ponscio.model.error.CrediYaError;
 import com.ponscio.model.valueobjects.IDS;
+import com.ponscio.model.valueobjects.IntegerV;
 import com.ponscio.model.valueobjects.InteresV;
 import com.ponscio.model.valueobjects.MontoV;
 import com.ponscio.repository.PrestamoDAO;
@@ -44,8 +45,9 @@ public class MenuPrestamos implements IMenu {
     private void crearPrestamo() {
         try {
             Prestamo prestamo = null;
-            int cliente_id = Integer.parseInt(new IDS(scan.leerTexto("> Ingrese el id del cliente: ")).getValue());
-            int empleado_id = Integer.parseInt(new IDS(scan.leerTexto("> Ingrese el id del empleado: ")).getValue());
+            int cliente_id = prestamoF.getClienteByDocumento(new IntegerV(scan.leerTexto("> Ingrese el documento del cliente: ")).getValue());
+            int empleado_id = prestamoF.getEmpleadoByDocumento(new IntegerV(scan.leerTexto("> Ingrese el documento del empleado: ")).getValue());
+
             double monto = new MontoV(scan.leerTexto("> Ingrese el monto del prestamo: ")).getValue();
 
             double interes = new InteresV(scan.leerTexto("> Ingrese el interes para el prestamo: ")).getValue();

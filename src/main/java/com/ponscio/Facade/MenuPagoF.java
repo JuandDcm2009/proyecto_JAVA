@@ -56,8 +56,9 @@ public class MenuPagoF {
     }    
 
     public String historialPagos(int cliente_id) throws CrediYaError {
-        String historial = "";
+        
         Cliente cliente = gClienteDB.getClienteById(cliente_id);
+        String historial = "\n============= Pagos de " + cliente.getNombre() + " =============\n";
         if (cliente == null ) 
             throw new CrediYaError("Hubo un error al intentar obtener el cliente.", BussinesError.VALOR_INEXISTENTE_NUMERO);
         List<Pago> pagos = pagoDAO.getPagosByIdCliente(cliente_id);
@@ -78,5 +79,18 @@ public class MenuPagoF {
 
         return prestamo;
     }
+
+    public int getClienteByDocumento(String documento) throws CrediYaError {
+        if (!gClienteDB.validarClienteByDocumento(documento)) 
+            throw new CrediYaError("El documento ingresado es invalido.", BussinesError.VALOR_INEXISTENTE_NUMERO);
+
+        Cliente cliente = gClienteDB.getClienteByDocumento(documento);
+        
+        if (cliente == null)
+            throw new CrediYaError("Hubo un problema al consultar por el cliente", BussinesError.ERROR_FALLO_PROCESO);
+
+        return cliente.getId();
+    }
+
     
 }

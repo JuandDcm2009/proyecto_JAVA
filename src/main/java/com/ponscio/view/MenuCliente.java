@@ -73,12 +73,14 @@ public class MenuCliente implements IMenu {
 
 
     public void listar() {
+        System.out.println("\n============= Lista de Clientes =============\n");
         System.out.println(clienteF.listarClientes());
     }
 
     public void mostrarPrestamos() {
-        int id_cliente = scan.leerInt("> Ingrese ID del cliente: ");
+        
         try {
+            int id_cliente = clienteF.getClienteByDocumento(new IntegerV(scan.leerTexto("> Ingrese el documento del cliente: ")).getValue());
             System.out.println(clienteF.mostrarPrestamo(id_cliente));
         } catch (Exception e) {
             System.out.println(e.getMessage());

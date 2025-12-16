@@ -98,7 +98,6 @@ public class EmpleadoDAO {
             stmt.setString(5, empleado.getCorreo());
             stmt.setDouble(6, empleado.getSalario());
             int filas = stmt.executeUpdate();
-            if (filas > 0 ) System.out.println("\nInformacion cargada correctamente!");
             return filas > 0;
 
         } catch (SQLException e) {
@@ -129,7 +128,6 @@ public class EmpleadoDAO {
     }
 
     public Boolean validarEmpleado(String documento) {
-        System.out.println("Cargando informacion...");
         var sql = "SELECT documento_numero, documento_tipo FROM empleados WHERE documento_numero = ?";
 
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {

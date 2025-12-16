@@ -3,6 +3,7 @@ import java.time.LocalDate;
 
 import com.ponscio.Facade.MenuPagoF;
 import com.ponscio.model.Pago;
+import com.ponscio.model.valueobjects.IntegerV;
 import com.ponscio.util.Scan;
 import com.ponscio.view.interfaz.IMenu;
 import com.ponscio.repository.PagoDAO;
@@ -49,7 +50,7 @@ public class MenuPago implements IMenu {
 
     private void historialPago() {
         try {
-            int id_cliente = scan.leerInt("> Ingrese el ID del cliente: ");
+            int id_cliente = menuPagoF.getClienteByDocumento(new IntegerV(scan.leerTexto("> Ingrese el documento del cliente: ")).getValue());
             System.out.println(menuPagoF.historialPagos(id_cliente));
         } catch (Exception e) {
             System.out.println(e.getMessage());
