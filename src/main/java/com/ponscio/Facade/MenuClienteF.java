@@ -63,9 +63,11 @@ public class MenuClienteF {
 
 
     public void registrarCliente(Cliente cliente) throws CrediYaError {
-        if (clienteDAO.validarCliente(cliente.getDocumentoNumero(), cliente.getDocumentoTipo())) throw new CrediYaError(" Ya fue ingresado un cliente con ese documento.", BussinesError.VALOR_REPETIDO_NUMERO);
+        if (clienteDAO.validarClienteByDocumento(cliente.getDocumentoNumero()))
+            throw new CrediYaError(" Ya fue ingresado un cliente con ese documento.", BussinesError.VALOR_REPETIDO_NUMERO);
         
-        if (clienteDAO.validarCliente(cliente.getCorreo())) throw new CrediYaError("El correo ingresado ya esta siendo usado por otro cliente", BussinesError.VALOR_REPETIDO_STRING);
+        if (clienteDAO.validarCliente(cliente.getCorreo())) 
+            throw new CrediYaError("El correo ingresado ya esta siendo usado por otro cliente", BussinesError.VALOR_REPETIDO_STRING);
         if (!clienteDAO.setCliente(cliente)) {
             throw new CrediYaError("Hubo un problema al intentar registrar el Cliente\nIntentelo de nuevo mas tarde.", BussinesError.ERROR_FALLO_PROCESO);
         }

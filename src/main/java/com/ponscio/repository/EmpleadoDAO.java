@@ -130,7 +130,7 @@ public class EmpleadoDAO {
 
     public Boolean validarEmpleado(String documento) {
         System.out.println("Cargando informacion...");
-        var sql = "SELECT documento_numero FROM empleados WHERE documento = ?";
+        var sql = "SELECT documento_numero, documento_tipo FROM empleados WHERE documento_numero = ?";
 
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
             stmt.setString(1, documento);
@@ -143,3 +143,4 @@ public class EmpleadoDAO {
     }
     
 }
+

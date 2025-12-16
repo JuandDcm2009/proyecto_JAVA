@@ -88,12 +88,11 @@ public class ClienteDAO {
         }
     }
 
-    public Boolean validarCliente(String documento, String tipo) {
+    public Boolean validarClienteByDocumento(String documento) {
         System.out.println("\nCargando Informacion....");
-        var sql = "SELECT documento_numero, documento_tipo FROM clientes WHERE documento_numero = ? AND documento_tipo = ?";
+        var sql = "SELECT documento_numero, documento_tipo FROM clientes WHERE documento_numero = ?";
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
             stmt.setString(1, documento);
-            stmt.setString(2, tipo);
             ResultSet result = stmt.executeQuery();
             if (!result.next()) {
                 return false;
