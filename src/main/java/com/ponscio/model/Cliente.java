@@ -42,13 +42,13 @@ public class Cliente {
     public String mostrarInfo(Telefono telefono, String codigoPais) {
         String info = "";
         if (telefono != null) {
-            info += "\n================ Cliente ================";
+            info += "\n---------------- Cliente ----------------";
             info += "\n\n\tID #"+id;
             info += "\n\tNombre: "+nombre;
             info += "\n\tDocumento: " + documento_numero + " (" + documento_tipo + ")";
             info += "\n\tCorreo: "+correo;
             info += "\n\tTelefono: ("+codigoPais+") " + telefono.getNumero();
-            info += "\n\n==========================================";
+            info += "\n\n-----------------------------------------";
         }
         return info;
     }

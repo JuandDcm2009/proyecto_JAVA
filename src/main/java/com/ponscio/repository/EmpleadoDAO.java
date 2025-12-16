@@ -27,7 +27,7 @@ public class EmpleadoDAO {
 
     // Cache
     private void cargarDatos() {
-        System.out.println("Cargando informacion...");
+        System.out.println("\nCargando informacion...");
         var sql = "SELECT id, nombre FROM roles";
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
             ResultSet result = stmt.executeQuery();

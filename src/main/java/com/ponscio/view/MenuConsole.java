@@ -45,15 +45,15 @@ public class MenuConsole implements IMenu {
     }
 
     public void mostrarMenu() {
-        System.out.println("\n====================================");
-        System.out.println("         MENU PRINCIPAL");
-        System.out.println("====================================\n");
+        System.out.println("\n==============================================");
+        System.out.println("              MENU PRINCIPAL");
+        System.out.println("==============================================\n");
         System.out.println("*\t1) Gestionar empleados");
         System.out.println("*\t2) Gestionar clientes");
         System.out.println("*\t3) Gestionar prestamos");
         System.out.println("*\t4) Gestionar Pagos");
         System.out.println("*\t5) Gestionar reportes");
-        System.out.println("\n====================================");
+        System.out.println("\n==============================================");
     }
     
 }

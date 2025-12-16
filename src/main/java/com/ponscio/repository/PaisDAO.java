@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class PaisDAO {
     
     public Map<String, Pais> getPaises() {
-        System.out.println("\n Cargando informacion");
+        System.out.println("\nCargando informacion");
         var sql = "SELECT id, nombre, codigo, continente_id FROM paises";
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
             ResultSet result = stmt.executeQuery();

@@ -58,12 +58,12 @@ public class MenuPago implements IMenu {
     }
 
     public void mostrarMenu() {
-        System.out.println("\n====================================");
-        System.out.println("         MENU PAGOS");
-        System.out.println("====================================\n");
+        System.out.println("\n==============================================");
+        System.out.println("              MENU PAGOS");
+        System.out.println("==============================================\n");
         System.out.println("*\t1) Ver historial de pagos");
         System.out.println("*\t2) Pagar cuota mensual");
         System.out.println("*\t0) Regresar al menu principal");
-        System.out.println("\n====================================");
+        System.out.println("\n==============================================");
     } 
 }

@@ -63,11 +63,11 @@ public class MenuPrestamos implements IMenu {
     }
 
     public void mostrarMenu() {
-        System.out.println("\n====================================");
-        System.out.println("         MENU EMPLEADOS");
-        System.out.println("====================================\n");
+        System.out.println("\n==============================================");
+        System.out.println("              MENU EMPLEADOS");
+        System.out.println("==============================================\n");
         System.out.println("*\t1) Crear prestamo");
         System.out.println("*\t0) Regresar al menu principal");
-        System.out.println("\n====================================");
+        System.out.println("\n==============================================");
     }
 }

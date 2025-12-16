@@ -48,7 +48,7 @@ public class Prestamo {
     public String mostrarInfo(Cliente cliente) {
         double interesTotal = monto + (monto * (interes / 100.0));
         String info = "";
-        info += "\n============= Prestamo ==============\n";
+        info += "\n-------------- Prestamo --------------\n";
         info += "\n\tID #" + id;
         info += "\n\n\tCliente ID: " + cliente.getId();
         info += "\n\tCliente: " + cliente.getNombre();
@@ -59,7 +59,7 @@ public class Prestamo {
         info += "\n\tEstado: " + estado.toUpperCase();
         info += "\n\n\tMonto con interes por cuota: $" + String.format("%,.2f", interesTotal / cuotas);
         info += "\n\tMonto con interes Total: $" + String.format("%,.2f",interesTotal );
-        info += "\n\n=====================================";
+        info += "\n\n--------------------------------------";
         return info;
     }
 

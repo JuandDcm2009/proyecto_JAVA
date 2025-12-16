@@ -71,14 +71,14 @@ public class MenuEmpleado implements IMenu {
     }
 
     private void consultar() {
-        System.out.println("\n====================================");
-        System.out.println("         CONSULTAR POR: ");
-        System.out.println("====================================\n");
+        System.out.println("\n==============================================");
+        System.out.println("              CONSULTAR POR: ");
+        System.out.println("==============================================\n");
         System.out.println("*\t1) Consultar por nombre");
         System.out.println("*\t2) Consultar por documento");
         System.out.println("*\t3) Consultar por ID");
         System.out.println("*\t0) Regresar");
-        System.out.println("\n====================================");
+        System.out.println("\n==============================================");
         var option = scan.leerInt("> Ingrese una opcion: ");
         List<Empleado> empleados = null;
 

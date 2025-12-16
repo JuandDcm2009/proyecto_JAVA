@@ -86,13 +86,13 @@ public class MenuCliente implements IMenu {
     }
     
     public void mostrarMenu() {
-        System.out.println("\n====================================");
-        System.out.println("         MENU CLIENTES");
-        System.out.println("====================================\n");
+        System.out.println("\n==============================================");
+        System.out.println("              MENU CLIENTES");
+        System.out.println("==============================================\n");
         System.out.println("*\t1) Registrar cliente");
         System.out.println("*\t2) Listar clientes");
         System.out.println("*\t3) Mostrar prestamos");
         System.out.println("*\t0) Regresar al menu principal");
-        System.out.println("\n====================================");
+        System.out.println("\n==============================================");
     }
 }

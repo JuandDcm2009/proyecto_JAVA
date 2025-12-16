@@ -42,14 +42,14 @@ public class Empleado {
     public String mostrarInfo(Map<Integer, String> roles) {
         String info = "";
 
-        info += "\n================ Empleado ================";
+        info += "\n---------------- Empleado ----------------";
         info += "\n\n\tID #"+id;
         info += "\n\tNombre: "+nombre;
         info += "\n\tDocumento: "+documento_numero+" ("+documento_tipo+")";
         info += "\n\tCorreo: "+correo;
         info += "\n\tSalario actual: $"+ String.format("%,.2f", salario);
         info += "\n\tCargo Actual: "+ roles.get(rol_id);
-        info += "\n\n==========================================";
+        info += "\n\n------------------------------------------";
         return info;
     }
 
