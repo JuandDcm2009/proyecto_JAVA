@@ -1,6 +1,4 @@
 package com.ponscio.Facade;
-
-import java.math.BigDecimal;
 import java.util.List;
 import com.ponscio.model.Empleado;
 import com.ponscio.model.error.BussinesError;

@@ -6,7 +6,6 @@ import com.ponscio.Facade.MenuPrestamoF;
 import com.ponscio.model.Prestamo;
 import com.ponscio.model.error.BussinesError;
 import com.ponscio.model.error.CrediYaError;
-import com.ponscio.model.valueobjects.IDS;
 import com.ponscio.model.valueobjects.IntegerV;
 import com.ponscio.model.valueobjects.InteresV;
 import com.ponscio.model.valueobjects.MontoV;

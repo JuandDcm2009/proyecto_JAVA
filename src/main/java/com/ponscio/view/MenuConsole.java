@@ -1,8 +1,6 @@
 package com.ponscio.view;
-import com.ponscio.Facade.MenuEmpleadoF;
 import com.ponscio.util.Scan;
 import com.ponscio.view.interfaz.IMenu;
-import com.ponscio.view.*;
 
 public class MenuConsole implements IMenu {
     
@@ -11,7 +9,6 @@ public class MenuConsole implements IMenu {
     private MenuPago mPago;
     private MenuCliente mCliente;
     private MenuPrestamos mPrestamos;
-    private MenuPago mPagos;
     private MenuReportes mReportes;
 
     public MenuConsole() {

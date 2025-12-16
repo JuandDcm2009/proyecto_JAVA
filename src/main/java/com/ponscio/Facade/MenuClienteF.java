@@ -2,7 +2,6 @@ package com.ponscio.Facade;
 
 import com.ponscio.repository.ClienteDAO;
 import com.ponscio.repository.PaisDAO;
-import com.ponscio.repository.PrestamoDAO;
 import com.ponscio.repository.TelefonoDAO;
 import com.ponscio.service.GestorPrestamoDB;
 import com.ponscio.util.PrintAdvise;
