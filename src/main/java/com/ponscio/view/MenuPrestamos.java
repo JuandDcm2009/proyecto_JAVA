@@ -52,10 +52,10 @@ public class MenuPrestamos implements IMenu {
             double interes = new InteresV(scan.leerTexto("> Ingrese el interes para el prestamo: ")).getValue();
             int cuotas = scan.leerInt("> Ingrese el numero de cuotas que tendra el prestamo:");
             if (cuotas <= 0) throw new CrediYaError("El número de cuotas debe ser mayor que cero.", BussinesError.VALOR_FUERA_DE_RANGO);
-            LocalDate fecha_inicio = LocalDate.now();
+            LocalDate fecha_prestamo = LocalDate.now();
 
             String estado = "pendiente";
-            prestamo = new Prestamo(0, cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado);
+            prestamo = new Prestamo(0, cliente_id, empleado_id, monto, interes, cuotas, fecha_prestamo, estado);
             prestamoF.crearPrestamo(prestamo);
         } 
         catch (CrediYaError e) {

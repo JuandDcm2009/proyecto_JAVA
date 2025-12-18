@@ -6,10 +6,10 @@ public class Prestamo {
     private String estado;
     private double monto, interes;
     private int cuotas, id, cliente_id, empleado_id;
-    private LocalDate fecha_inicio;
+    private LocalDate fecha_prestamo;
     
     public Prestamo(int id, int cliente_id, int empleado_id, double monto, double interes, int cuotas,
-            LocalDate fecha_inicio, String estado) {
+            LocalDate fecha_prestamo, String estado) {
         this.cliente_id = cliente_id;
         this.empleado_id = empleado_id;
         this.estado = estado;
@@ -17,7 +17,7 @@ public class Prestamo {
         this.interes = interes;
         this.cuotas = cuotas;
         this.id = id;
-        this.fecha_inicio = fecha_inicio;
+        this.fecha_prestamo = fecha_prestamo;
     }
 
     public int getCliente_id() {
@@ -41,8 +41,8 @@ public class Prestamo {
     public int getId() {
         return id;
     }
-    public LocalDate getFecha_inicio() {
-        return fecha_inicio;
+    public LocalDate getFecha_prestamo() {
+        return fecha_prestamo;
     }
 
     public String mostrarInfo(Cliente cliente) {
@@ -52,7 +52,7 @@ public class Prestamo {
         info += "\n\tID #" + id;
         info += "\n\n\tCliente ID: " + cliente.getId();
         info += "\n\tCliente: " + cliente.getNombre();
-        info += "\n\tFecha inicio: " + fecha_inicio;
+        info += "\n\tFecha prestamo: " + fecha_prestamo;
         info += "\n\n\tMonto: $" + String.format("%,.2f", monto);
         info += "\n\tInteres: " + interes +"%";
         info += "\n\tCuotas: " + cuotas;

@@ -15,8 +15,8 @@ public class MenuEmpleadoF {
     private BufferWriter writer;
 
     public MenuEmpleadoF(EmpleadoDAO empleadoDAO) {
-        this.empleadoDAO = empleadoDAO;
-        this.writer = new BufferWriter("registro/Empleados.txt");
+        this.empleadoDAO = empleadoDAO ;
+       this.writer = new BufferWriter("registro/Empleados.txt");
     }
 
     public String registrar(Empleado empleado) throws CrediYaError {

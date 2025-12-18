@@ -1,5 +1,6 @@
 package com.ponscio.repository;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -10,6 +11,17 @@ public class BufferWriter {
 
     public BufferWriter(String ruta) {
         this.ruta = ruta;
+        validarRuta(ruta);
+    }
+
+    private void validarRuta(String path) {
+        var dir = path.split("/");
+        if(dir.length > 0) {
+            File newDir = new File(dir[0]);
+            if(!newDir.exists()) {
+                newDir.mkdir();
+            }
+        }
     }
     
     public void escribir(String texto) {

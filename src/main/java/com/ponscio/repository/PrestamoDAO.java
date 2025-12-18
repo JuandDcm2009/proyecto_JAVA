@@ -15,7 +15,7 @@ import com.ponscio.util.PrintAdvise;
 public class PrestamoDAO {
     
     public Boolean setPrestamo(Prestamo prestamo) {
-        String sql = "INSERT INTO prestamos(cliente_id, empleado_id, monto, interes, cuotas, fecha_inicio, estado) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO prestamos(cliente_id, empleado_id, monto, interes, cuotas, fecha_prestamo, estado) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, prestamo.getCliente_id());
@@ -23,7 +23,7 @@ public class PrestamoDAO {
             stmt.setDouble(3, prestamo.getMonto());
             stmt.setDouble(4, prestamo.getInteres());
             stmt.setInt(5, prestamo.getCuotas());
-            stmt.setDate(6, Date.valueOf(prestamo.getFecha_inicio()));
+            stmt.setDate(6, Date.valueOf(prestamo.getFecha_prestamo()));
             stmt.setString(7, prestamo.getEstado());
             int filas  = stmt.executeUpdate();
 
@@ -54,7 +54,7 @@ public class PrestamoDAO {
                     result.getDouble("monto"),
                     result.getDouble("interes"),
                     result.getInt("cuotas"),
-                    result.getDate("fecha_inicio").toLocalDate(),
+                    result.getDate("fecha_prestamo").toLocalDate(),
                     result.getString("estado")
                 ));
             }
@@ -96,7 +96,7 @@ public class PrestamoDAO {
     }
 
     public void updateEstadoToPagado(int id_prestamo) {
-        String sql = "UPDATE prestamos SET estado = 'pagado' WHERE id = ?";
+        String sql = "UPDATE prestamos SET estado = 'VENCIDO' WHERE id = ?";
         try (Connection db = new ConnectionDB().connect(); PreparedStatement stmt = db.prepareStatement(sql)) {
             stmt.setInt(1, id_prestamo);
             int rows = stmt.executeUpdate();

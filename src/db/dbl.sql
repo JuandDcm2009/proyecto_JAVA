@@ -52,8 +52,8 @@ CREATE TABLE prestamos (
     monto DECIMAL(12,2) NOT NULL,
     interes DECIMAL(5,2) NOT NULL,
     cuotas INT NOT NULL,
-    fecha_inicio DATE NOT NULL,
-    estado ENUM('pendiente', 'pagado') NOT NULL,
+    fecha_prestamo DATE NOT NULL,
+    estado ENUM('ACTIVO', 'VENCIDO') NOT NULL,
     FOREIGN KEY (cliente_id) REFERENCES clientes(id),
     FOREIGN KEY (empleado_id) REFERENCES empleados(id)
 
@@ -66,3 +66,5 @@ CREATE TABLE pagos (
     monto DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (prestamo_id) REFERENCES prestamos(id)
 );
+
+

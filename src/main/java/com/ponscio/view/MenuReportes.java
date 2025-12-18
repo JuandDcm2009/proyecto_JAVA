@@ -23,8 +23,8 @@ public class MenuReportes {
 
     public void leerOpcion(int opcion) {
         switch (opcion) {
-            case 1 -> consultarPrestamosPagados();
-            case 2 -> consultarPrestamosPendientes();
+            case 1 -> consultarPrestamosVencidos();
+            case 2 -> consultarPrestamosActivos();
             case 3 -> consultarClienteCE();
             case 4 -> consultarClienteCC();
             case 0 -> System.out.println("Regresando...");
@@ -32,14 +32,14 @@ public class MenuReportes {
         }
     }
 
-    public void consultarPrestamosPagados() {
-        System.out.println("\n============ Prestamos pagados ============");
-        System.out.println(mReporteF.consultarPrestamosEstado("pagado"));
+    public void consultarPrestamosVencidos() {
+        System.out.println("\n============ Prestamos VENCIDOS ============");
+        System.out.println(mReporteF.consultarPrestamosEstado("VENCIDO"));
     }
 
-    public void consultarPrestamosPendientes() {
-        System.out.println("\n=========== Prestamos pendientes ===========");
-        System.out.println(mReporteF.consultarPrestamosEstado("pendiente"));
+    public void consultarPrestamosActivos() {
+        System.out.println("\n=========== Prestamos ACTIVOS ===========");
+        System.out.println(mReporteF.consultarPrestamosEstado("ACTIVO"));
     }
 
     public void consultarClienteCE() {
@@ -54,14 +54,13 @@ public class MenuReportes {
 
     public void mostrarMenu() {
         System.out.println("\n==============================================");
-        System.out.println("              MENU REPORTES");
-        System.out.println("==============================================\n");
-        System.out.println("*\t1) Prestamos pagados");
-        System.out.println("*\t2) Prestamos pendientes");
+        System.out.println("              MENU REPORTES EXAMEN");
+        System.out.println("============================\n");
+        System.out.println("*\t1) Prestamos VENCIDOS");
+        System.out.println("*\t2) Prestamos ACTIVOS");
         System.out.println("*\t3) Clientes Extranjeros");
         System.out.println("*\t4) Clientes Connacionales");
         System.out.println("*\t0) Regresar al menu principal");
         System.out.println("\n==============================================");
     }
 }
-

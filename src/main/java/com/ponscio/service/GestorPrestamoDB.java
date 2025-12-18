@@ -22,9 +22,24 @@ public class GestorPrestamoDB {
     public Boolean validarPrestamoById(int id) {
         return prestamoDAO.validarPrestamoById(id);
     }
-
     public void updateEstadoToPagado(int id_prestamo) {
         prestamoDAO.updateEstadoToPagado(id_prestamo);
     }
+
+    public List<Prestamo> PrestamosVencidos(int prestamo_id) {
+        return prestamoDAO.getPrestamosByClienteId(prestamo_id);
+    }
+
+    public List<Prestamo> PrestamosActivos(int cliente_id) {
+        return prestamoDAO.getPrestamosByClienteId(cliente_id);
+
+    }
+    public List<Prestamo> MostrarResumen(int cliente_id) {
+            return prestamoDAO.getPrestamosByClienteId(cliente_id);
+        
+    
+    }
+
 }
+
 
