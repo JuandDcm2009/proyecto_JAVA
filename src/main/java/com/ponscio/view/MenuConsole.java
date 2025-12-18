@@ -10,6 +10,7 @@ public class MenuConsole implements IMenu {
     private MenuCliente mCliente;
     private MenuPrestamos mPrestamos;
     private MenuReportes mReportes;
+    private MenuPrestamoDos mPrestamoDos;
 
     public MenuConsole() {
         this.scan = new Scan();
@@ -18,6 +19,7 @@ public class MenuConsole implements IMenu {
         this.mPrestamos = new MenuPrestamos();
         this.mPago = new MenuPago();
         this.mReportes = new MenuReportes();
+        this.mPrestamoDos = new MenuPrestamoDos();
     }
 
     public void iniciar() {
@@ -36,6 +38,7 @@ public class MenuConsole implements IMenu {
             case 3 -> mPrestamos.iniciar();
             case 4 -> mPago.iniciar();
             case 5 -> mReportes.iniciar();
+            case 6 -> mPrestamoDos.iniciar();
             case 0 -> System.out.println("Gracias por elegir a Ponscio Studio's company");
             default -> System.out.println("Opcion invalida");
         }
@@ -50,6 +53,7 @@ public class MenuConsole implements IMenu {
         System.out.println("*\t3) Gestionar prestamos");
         System.out.println("*\t4) Gestionar pagos");
         System.out.println("*\t5) Gestionar reportes");
+        System.out.println("*\t6) Gestionar Prestamos 2");
         System.out.println("\n==============================================");
     }
     
