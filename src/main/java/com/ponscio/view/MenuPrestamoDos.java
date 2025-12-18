@@ -12,6 +12,7 @@ public class MenuPrestamoDos {
 
     public MenuPrestamoDos() {
         this.scan = new Scan();
+        this.gPrestamosDos = new GestorPrestamosDos();
     }
 
     public void iniciar() {
@@ -25,6 +26,9 @@ public class MenuPrestamoDos {
 
     public void leerOpcion(int opcion) {
         switch (opcion) {
+            case 1 -> registrarPrestamo();
+            case 2 -> listarPrestamos();
+            case 3 -> filtrarPrestamos();
             case 0 -> System.out.println("Regresando...");
             default -> System.out.println("Opcion invalida");
         }
@@ -53,10 +57,10 @@ public class MenuPrestamoDos {
         }
     }
 
-    public void FiltrarPrestamos() {
+    public void filtrarPrestamos() {
         try {
             System.out.println("=========== Prestamos FILTRADOS ===========");
-            System.out.println(gPrestamosDos.buscarPrestamoPorEstado(scan.leerTexto("> Ingrese el estado a buscar: ").trim().toLowerCase()));
+            System.out.println(gPrestamosDos.buscarPrestamoPorEstado(scan.leerTexto("> Ingrese el estado a buscar: ").trim()));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println(e.toString());

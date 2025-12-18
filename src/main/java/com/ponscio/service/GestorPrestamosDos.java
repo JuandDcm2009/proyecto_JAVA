@@ -41,19 +41,21 @@ public class GestorPrestamosDos {
     public String buscarPrestamoPorEstado(String estado) throws CrediYaError {
         StringBuilder lista = new StringBuilder();
 
-        if (!(estado.equals("pagado"))|| !(estado.equals("activo")) || !(estado.equals("mora")))
-            throw new CrediYaError("El estado ingresado no existe", BussinesError.VALOR_INVALIDO_STRING);
+        if (estado.toLowerCase().equals("pagado")|| estado.toLowerCase().equals("activo") || estado.toLowerCase().equals("mora")) {
+            List<PrestamoDos> prestamosFiltrados = prestamos.stream()
+            .filter(e -> e.getEstado().equals(estado)).toList();
 
-        List<PrestamoDos> prestamosFiltrados = prestamos.stream()
-        .filter(e -> e.getEstado().equals(estado)).toList();
+            for (PrestamoDos prestamoDos : prestamosFiltrados) {
+                lista.append(prestamoDos.toString());
+            }
 
-        for (PrestamoDos prestamoDos : prestamosFiltrados) {
-            lista.append(prestamoDos.toString());
+
+            if (lista.toString().length() == 0) return "No se encontraron prestamos con el estado " + estado;
+            return lista.toString();
         }
+            
 
-
-        if (lista.toString().length() == 0) return "No se encontraron prestamos con el estado " + estado;
-        return lista.toString();
+        throw new CrediYaError("El estado ingresado no existe", BussinesError.VALOR_INVALIDO_STRING);
     } 
     
 }

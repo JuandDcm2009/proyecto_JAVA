@@ -11,7 +11,7 @@ import com.ponscio.model.PrestamoDos;
 public class PrestamoDosDAO {
     
     public int setPrestamoDos(PrestamoDos prestamoDos) {
-        String sql = "INSERT INTO prestamosDos(cliente_id, monto, interes_mensual, plazo_meses, estado) VALUES(?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO prestamos_dos(cliente_id, monto, interes_mensual, plazo_meses, estado) VALUES(?, ?, ?, ?, ?)";
         try (Connection db = ConnectionDB.connect(); PreparedStatement stmt = db.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, prestamoDos.getCliente_id());
             stmt.setDouble(2, prestamoDos.getMonto());
